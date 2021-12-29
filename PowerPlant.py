@@ -2,6 +2,7 @@ import pygame
 
 class PowerPlant(pygame.sprite.Sprite):
     def __init__(self, ship, x, y):
+        pygame.sprite.Sprite.__init__(self)
         self.ship = ship
         self.x = x
         self.y = y
@@ -14,10 +15,11 @@ class PowerPlant(pygame.sprite.Sprite):
         self.image_broken = pygame.image.load('data\\powerplant_broken.png')
         self.image_not_working = pygame.image.load('data\\powerplant_not_working.png')
         self.image = self.images[self.image_index]
-        self.ship.map[y][x] = 'p'
+        self.rect = pygame.Rect(x * self.ship.cell_size, y * self.ship.cell_size, 90, 90)
+        self.ship.map[y][x] = self
         for y in range(y + 1, y + 2):
             for x in range(x + 1, x + 2):
-                self.ship.map[y][x] = 'o'
+                self.ship.map[y][x] = self
         self.ship.every_single_unit['energy'].append(self)
 
     def new_image(self):
@@ -33,3 +35,7 @@ class PowerPlant(pygame.sprite.Sprite):
                 self.image = self.images[self.images.index(self.image) - 1]
             else:
                 self.counter += 1
+
+    def do(self):
+        if self.working:
+            self.ship.resourses['energy'] += 3
