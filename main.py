@@ -15,6 +15,6 @@ while True:
             sys.exit()
 
     ship.blt()
-    screen.blit(ship.surf, (0, 0))
+    screen.blit(ship.surf, (150, 75))
     pygame.display.update()
     clock.tick(fps)
