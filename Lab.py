@@ -1,16 +1,17 @@
 import  pygame
 
-class Lab:
+class Lab(pygame.sprite.Sprite):
     def __init__(self, ship, x, y):
         pygame.sprite.Sprite.__init__(self)
         self.health = 10
+        self.ship = ship
         self.images = [pygame.image.load('data\\lab1.png'), pygame.image.load('data\\lab2.png')]
         self.image = self.images[0]
         self.image_not_working = pygame.image.load('data\\lab_not_working.png')
         self.image_broken = pygame.image.load('data\\lab_broken.png')
+        self.rect = pygame.Rect(x * self.ship.cell_size, y * self.ship.cell_size, 90, 90)
         self.counter = 1
         self.consume = 3
-        self.ship = ship
         self.working = True
         self.broken = False
         self.x = x
@@ -20,7 +21,6 @@ class Lab:
             for x in range(x + 1, x + 3):
                 self.ship.map[y][x] = self
         self.ship.every_single_unit['labs'].append(self)
-        self.rect = pygame.Rect(x * self.ship.cell_size, y * self.ship.cell_size, 90, 90)
 
     def do(self):
         if self.working:
@@ -29,11 +29,6 @@ class Lab:
                 self.ship.resourses['energy'] -= 3
             else:
                 self.working = False
-        else:
-            if self.ship.resourses['energy'] >= 3:
-                self.working = True
-                self.ship.resourses['science'] += 3
-                self.ship.resourses['energy'] -= 3
         self.new_image()
 
     def new_image(self):

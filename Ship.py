@@ -14,9 +14,6 @@ class Ship():
         self.every_single_unit = {'labs': [], 'farms': [], 'storages': [], 'engines': [], 'energy': [], 'defense': [], 'cabins': [],
                                   'workshops': [], 'armor': []}
         self.group = pygame.sprite.Group()
-        for i in self.every_single_unit.keys():
-            for a in self.every_single_unit[i]:
-                self.group.add(a)
         self.humans = 10
         self.cell_size = 30
         self.surf = pygame.Surface((self.cell_size * len(self.map[0]), self.cell_size * len(self.map)), pygame.SRCALPHA)
@@ -27,6 +24,10 @@ class Ship():
         lab1 = Lab(self, 5, 3)
         armor = Armor(self, 10, 10)
         plant = PowerPlant(self, 8, 0)
+        for i in self.every_single_unit.keys():
+            for a in self.every_single_unit[i]:
+                self.group.add(a)
+        print(self.group.sprites())
 
     def blt(self):
         self.surf = pygame.Surface((self.cell_size * len(self.map[0]), self.cell_size * len(self.map)), pygame.SRCALPHA)
@@ -41,4 +42,9 @@ class Ship():
                 unit.do()
 
     def change(self, x, y):
-        pass
+        for unit in self.group.sprites():
+            if unit.rect.collidepoint(x, y):
+                if unit.working:
+                    unit.working = False
+                else:
+                    unit.working = True
