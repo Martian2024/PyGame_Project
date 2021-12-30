@@ -11,6 +11,7 @@ class Armor(pygame.sprite.Sprite):
         self.image_damaged = pygame.image.load('data\\armor_damaged.png')
         self.image = self.image_ok
         self.damaged = False
+        self.working = True
         self.ship.map[y][x] = self
         self.ship.every_single_unit['armor'].append(self)
         self.rect = pygame.Rect(x * self.ship.cell_size, y * self.ship.cell_size, 30, 30)

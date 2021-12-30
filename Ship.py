@@ -11,7 +11,7 @@ class Ship():
         self.map = [['n' for _ in range(30)] for _ in range(15)]
         self.resourses = {'Fe': 0, 'Cu': 0, 'O2': 0, 'CO2': 0, 'Al': 0, 'Si': 0, 'U': 0, 'H2O': 0, 'food': 0,
                           'energy': 100, 'science': 0}
-        self.every_single_unit = {'labs': [], 'farms': [], 'storages': [], 'engines': [], 'energy': [], 'defense': [], 'cabins': [],
+        self.every_single_unit = {'science': [], 'food': [], 'storages': [], 'engines': [], 'energy': [], 'defense': [], 'cabins': [],
                                   'workshops': [], 'armor': []}
         self.group = pygame.sprite.Group()
         self.humans = 10
@@ -28,6 +28,7 @@ class Ship():
             for a in self.every_single_unit[i]:
                 self.group.add(a)
         print(self.group.sprites())
+        self.lab1 = lab1
 
     def blt(self):
         self.surf = pygame.Surface((self.cell_size * len(self.map[0]), self.cell_size * len(self.map)), pygame.SRCALPHA)
