@@ -4,7 +4,6 @@ from Farm import Farm
 from Lab import Lab
 from Armor import Armor
 from PowerPlant import PowerPlant
-from MousePointer import MousePointer
 
 class Ship():
     def __init__(self):
@@ -17,7 +16,6 @@ class Ship():
         self.humans = 10
         self.cell_size = 30
         self.surf = pygame.Surface((self.cell_size * len(self.map[0]), self.cell_size * len(self.map)), pygame.SRCALPHA)
-        self.mouse = MousePointer(0, 0)
         lab = Lab(self, 0, 0)
         farm = Farm(self, 0, 3)
         farm1 = Farm(self, 3, 0)
