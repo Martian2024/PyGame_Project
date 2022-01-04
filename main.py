@@ -9,14 +9,19 @@ fps = 60
 screen = pygame.display.set_mode((1200, 600))
 ship = Ship()
 fon = pygame.image.load('data\\fon.jpg')
-font = pygame.font.Font(None, 50)
+wn = pygame.font.Font(None, 50)
+prg = pygame.font.Font(None, 25)
 
 def show_progress():
+    st = prg.render('start', True, pygame.Color('white'))
+    screen.blit(st, (65, 520))
+    fn = prg.render('finish', True, pygame.Color('white'))
+    screen.blit(fn, (1110, 520))
     pygame.draw.rect(screen, pygame.Color('orange'), (75, 515, ship.distance * (1050 / ship.aim_distance), 5))
     pygame.draw.rect(screen, pygame.Color('white'), (75, 515, 1050, 5), 1)
 
 def win():
-    text = font.render('YOU WIN!', False, pygame.Color('white'))
+    text = wn.render('YOU WIN!', False, pygame.Color('white'))
     screen.blit(fon, (0, 0))
     screen.blit(text, (550, 250))
 
