@@ -1,8 +1,6 @@
 import pygame
 import sys
 from Ship import Ship
-from Farm import Farm
-from Lab import Lab
 
 clock = pygame.time.Clock()
 fps = 60

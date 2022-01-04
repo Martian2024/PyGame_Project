@@ -28,6 +28,6 @@ class PowerPlant(Unit):
             else:
                 self.counter += 1
 
-    def do(self):
+    def output(self):
         if self.working:
             self.ship.resourses['energy'] += 3

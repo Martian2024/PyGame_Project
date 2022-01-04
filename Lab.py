@@ -6,7 +6,7 @@ class Lab(Unit):
         super().__init__(ship, x, y,
                          [pygame.image.load('data\\lab1.png'), pygame.image.load('data\\lab2.png'),
                           pygame.image.load('data\\lab_not_working.png'), pygame.image.load('data\\lab_broken.png')],
-                         'science', 3, 'energy')
+                         'science', 3, ['energy'])
 
     def do(self):
         if self.working:

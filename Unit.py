@@ -14,15 +14,20 @@ class Unit(pygame.sprite.Sprite):
         self.counter = 0
         if len(images) == 3:
             self.images = images[:1]
+            self.image = self.images[0]
+            self.image_working = self.images[0]
+            self.image_not_working = images[-2]
+            self.image_broken = images[-1]
         else:
             self.images = images[:2]
-        self.image = self.images[0]
-        self.image_working = self.images[0]
-        self.image_not_working = images[-2]
-        self.image_broken = images[-1]
+            self.image = self.images[0]
+            self.image_working = self.images[0]
+            self.image_not_working = images[-2]
+            self.image_broken = images[-1]
         self.rect = self.image.get_rect()
         self.rect.move_ip(x * ship.cell_size, y * ship.cell_size)
-        ship.every_single_unit[self.cat].append(self)
+        self.ship.every_single_unit[self.cat].append(self)
+
 
     def new_image(self):
         if self.broken:
@@ -47,9 +52,14 @@ class Unit(pygame.sprite.Sprite):
     def do(self):
         if self.working:
             if self.consume_cat != None:
-                if self.ship.resourses[self.consume_cat] >= self.consume:
+                flag = True
+                for i in self.consume_cat:
+                    if self.ship.resourses[i] < self.consume:
+                        flag = False
+                if flag:
                     self.ship.resourses[self.cat] += self.consume
-                    self.ship.resourses[self.consume_cat] -= self.consume
+                    for i in self.consume_cat:
+                        self.ship.resourses[i] -= self.consume
                 else:
                     self.working = False
             else:

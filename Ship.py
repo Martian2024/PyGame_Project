@@ -4,6 +4,7 @@ from Farm import Farm
 from Lab import Lab
 from Armor import Armor
 from PowerPlant import PowerPlant
+from Battery import Battery
 
 class Ship():
     def __init__(self):
@@ -12,6 +13,7 @@ class Ship():
                           'energy': 100, 'science': 0}
         self.every_single_unit = {'science': [], 'food': [], 'storages': [], 'engines': [], 'energy': [], 'defense': [], 'cabins': [],
                                   'workshops': [], 'armor': []}
+        self.storages = {'energy': []}
         self.group = pygame.sprite.Group()
         self.humans = 10
         self.cell_size = 30
@@ -22,11 +24,11 @@ class Ship():
         lab1 = Lab(self, 5, 3)
         armor = Armor(self, 10, 10)
         plant = PowerPlant(self, 8, 0)
+        self.battery = Battery(self, 10, 10)
+        self.battery1 = Battery(self, 8, 3)
         for i in self.every_single_unit.keys():
             for a in self.every_single_unit[i]:
                 self.group.add(a)
-        print(self.group.sprites())
-        self.lab1 = lab1
 
     def blt(self):
         self.surf = pygame.Surface((self.cell_size * len(self.map[0]), self.cell_size * len(self.map)), pygame.SRCALPHA)
@@ -36,9 +38,19 @@ class Ship():
                 self.surf.blit(unit.image, (self.cell_size * unit.x, self.cell_size * unit.y))
 
     def all_systems_check(self):
+
+        self.resourses = {'Fe': 0, 'Cu': 0, 'O2': 0, 'CO2': 0, 'Al': 0, 'Si': 0, 'U': 0, 'H2O': 0, 'food': 0,
+                          'energy': 0, 'science': 0}
+        for cat in self.storages.keys():
+            for unit in self.storages[cat]:
+                unit.output()
         for cat in self.every_single_unit.keys():
             for unit in self.every_single_unit[cat]:
                 unit.do()
+        for cat in self.storages.keys():
+            for unit in self.storages[cat]:
+                unit.input()
+
 
     def change(self, x, y):
         for unit in self.group.sprites():
