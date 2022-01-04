@@ -1,26 +1,10 @@
 import pygame
+from Unit import Unit
 
-class Armor(pygame.sprite.Sprite):
+class Armor(Unit):
     def __init__(self, ship, x, y):
-        pygame.sprite.Sprite.__init__(self)
-        self.health = 10
-        self.x = x
-        self.y = y
-        self.ship = ship
-        self.image_ok = pygame.image.load('data\\armor_ok.png')
-        self.image_damaged = pygame.image.load('data\\armor_damaged.png')
-        self.image = self.image_ok
-        self.damaged = False
-        self.working = True
-        self.ship.map[y][x] = self
-        self.ship.every_single_unit['armor'].append(self)
-        self.rect = pygame.Rect(x * self.ship.cell_size, y * self.ship.cell_size, 30, 30)
-
-    def new_image(self):
-        if self.damaged == True:
-            self.image = self.image_damaged
-        else:
-            self.image = self.image_ok
+        super().__init__(ship, x, y, [pygame.image.load('data\\armor_ok.png'), pygame.image.load('data\\armor_ok.png'),
+                                      pygame.image.load('data\\armor_damaged.png')], 'armor', 0, None)
 
     def do(self):
         pass

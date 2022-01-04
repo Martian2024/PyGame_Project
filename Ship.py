@@ -5,6 +5,7 @@ from Lab import Lab
 from Armor import Armor
 from PowerPlant import PowerPlant
 from Battery import Battery
+from Engine import Engine
 
 class Ship():
     def __init__(self):
@@ -26,6 +27,7 @@ class Ship():
         plant = PowerPlant(self, 8, 0)
         self.battery = Battery(self, 10, 10)
         self.battery1 = Battery(self, 8, 3)
+        eng = Engine(self, 11, 0)
         for i in self.every_single_unit.keys():
             for a in self.every_single_unit[i]:
                 self.group.add(a)
@@ -38,7 +40,6 @@ class Ship():
                 self.surf.blit(unit.image, (self.cell_size * unit.x, self.cell_size * unit.y))
 
     def all_systems_check(self):
-
         self.resourses = {'Fe': 0, 'Cu': 0, 'O2': 0, 'CO2': 0, 'Al': 0, 'Si': 0, 'U': 0, 'H2O': 0, 'food': 0,
                           'energy': 0, 'science': 0}
         for cat in self.storages.keys():

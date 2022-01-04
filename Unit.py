@@ -32,8 +32,10 @@ class Unit(pygame.sprite.Sprite):
     def new_image(self):
         if self.broken:
             self.image = self.image_broken
+            self.counter = 1
         elif not self.working:
             self.image = self.image_not_working
+            self.counter = 1
         else:
             if len(self.images) == 1:
                 self.image = self.images[0]
@@ -46,6 +48,7 @@ class Unit(pygame.sprite.Sprite):
                     self.counter += 1
                 elif self.counter == 1:
                     self.image = self.images[0]
+                    self.counter += 1
                 else:
                     self.counter += 1
 
@@ -64,3 +67,4 @@ class Unit(pygame.sprite.Sprite):
                     self.working = False
             else:
                 self.ship.resourses[self.cat] += self.consume
+        self.new_image()
