@@ -8,3 +8,6 @@ class Engine(Unit):
                                       pygame.image.load('data\\engine_not_working.png'),
                                       pygame.image.load('data\\engine_broken.png')], 'energy', 2, None)
         self.acceleration = 3
+
+    def do(self):
+        self.ship.distance += self.ship.velocity + self.acceleration

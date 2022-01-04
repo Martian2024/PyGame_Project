@@ -9,6 +9,9 @@ from Engine import Engine
 
 class Ship():
     def __init__(self):
+        self.distance = 0
+        self.aim_distance = 1000
+        self.velocity = 0
         self.map = [['n' for _ in range(30)] for _ in range(15)]
         self.resourses = {'Fe': 0, 'Cu': 0, 'O2': 0, 'CO2': 0, 'Al': 0, 'Si': 0, 'U': 0, 'H2O': 0, 'food': 0,
                           'energy': 100, 'science': 0}
@@ -25,8 +28,8 @@ class Ship():
         lab1 = Lab(self, 5, 3)
         armor = Armor(self, 10, 10)
         plant = PowerPlant(self, 8, 0)
-        self.battery = Battery(self, 10, 10)
-        self.battery1 = Battery(self, 8, 3)
+        battery = Battery(self, 10, 10)
+        battery1 = Battery(self, 8, 3)
         eng = Engine(self, 11, 0)
         for i in self.every_single_unit.keys():
             for a in self.every_single_unit[i]:
