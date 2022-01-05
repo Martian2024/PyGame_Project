@@ -6,16 +6,19 @@ from Armor import Armor
 from PowerPlant import PowerPlant
 from Battery import Battery
 from Engine import Engine
+from Command_module import Comand_Module
 
 class Ship():
     def __init__(self):
         self.distance = 0
         self.aim_distance = 100000
         self.velocity = 0
+        self.under_control = True
+        self.controls = []
         self.map = [['n' for _ in range(30)] for _ in range(15)]
         self.resourses = {'Fe': 0, 'Cu': 0, 'O2': 0, 'CO2': 0, 'Al': 0, 'Si': 0, 'U': 0, 'H2O': 0, 'food': 0,
                           'energy': 100, 'science': 0}
-        self.every_single_unit = {'science': [], 'food': [], 'storages': [], 'engines': [], 'energy': [], 'defense': [], 'cabins': [],
+        self.every_single_unit = {'energy': [], 'commands': [], 'food': [], 'storages': [], 'engines': [], 'science': [], 'defense': [], 'cabins': [],
                                   'workshops': [], 'armor': []}
         self.storages = {'energy': []}
         self.group = pygame.sprite.Group()
@@ -25,12 +28,14 @@ class Ship():
         lab = Lab(self, 0, 0)
         farm = Farm(self, 0, 3)
         farm1 = Farm(self, 3, 0)
-        lab1 = Lab(self, 5, 3)
+        self.lab1 = Lab(self, 5, 3)
         armor = Armor(self, 10, 10)
         plant = PowerPlant(self, 8, 0)
         battery = Battery(self, 10, 10)
         battery1 = Battery(self, 8, 3)
         eng = Engine(self, 11, 0)
+        module = Comand_Module(self, 0, 6)
+        module1 = Comand_Module(self, 0, 9)
         for i in self.every_single_unit.keys():
             for a in self.every_single_unit[i]:
                 self.group.add(a)
@@ -48,6 +53,12 @@ class Ship():
         for cat in self.storages.keys():
             for unit in self.storages[cat]:
                 unit.output()
+        flag = False
+        for unit in self.controls:
+            if unit.working:
+                flag = True
+        if not flag:
+            self.under_control = False
         for cat in self.every_single_unit.keys():
             for unit in self.every_single_unit[cat]:
                 unit.do()
