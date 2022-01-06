@@ -27,6 +27,8 @@ class Unit(pygame.sprite.Sprite):
         self.rect = pygame.Rect(x * ship.cell_size - 1, y * ship.cell_size - 1, self.image.get_width() + 2, self.image.get_height() + 2)
         self.ship.every_single_unit[self.cat].append(self)
         self.ship.group.add(self)
+        self.health = 10
+        self.max_health = 10
 
 
     def new_image(self):
