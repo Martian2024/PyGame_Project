@@ -33,11 +33,20 @@ class Ship():
         plant = PowerPlant(self, 8, 0)
         battery = Battery(self, 10, 10)
         battery1 = Battery(self, 8, 3)
-        eng = Engine(self, 11, 0)
-        module = Comand_Module(self, 0, 6)
+        eng = Engine(self, 12, 0)
+        self.comand_module = Comand_Module(self, 0, 6)
         for i in self.every_single_unit.keys():
             for a in self.every_single_unit[i]:
                 self.group.add(a)
+        self.new_group = pygame.sprite.Group()
+        self.new_group.add(self.comand_module)
+
+    def dfs(self, sprite, visited):
+        visited.append(sprite)
+        for i in pygame.sprite.spritecollide(sprite, self.group, False):
+            if i not in visited:
+                self.new_group.add(i)
+                self.dfs(i, visited)
 
     def blt(self):
         self.surf = pygame.Surface((self.cell_size * len(self.map[0]), self.cell_size * len(self.map)), pygame.SRCALPHA)
@@ -47,6 +56,13 @@ class Ship():
                 self.surf.blit(unit.image, (self.cell_size * unit.x, self.cell_size * unit.y))
 
     def all_systems_check(self):
+        self.dfs(self.comand_module, [])
+        for unit in self.group:
+            if unit not in self.new_group.sprites():
+                self.group.remove(unit)
+                self.every_single_unit[unit.cat].remove(unit)
+        self.new_group = pygame.sprite.Group()
+        self.new_group.add(self.comand_module)
         self.resourses = {'Fe': 0, 'Cu': 0, 'O2': 0, 'CO2': 0, 'Al': 0, 'Si': 0, 'U': 0, 'H2O': 0, 'food': 0,
                           'energy': 0, 'science': 0}
         for cat in self.storages.keys():
