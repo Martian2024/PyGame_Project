@@ -10,4 +10,10 @@ class Comand_Module(Unit):
         self.ship.controls.append(self)
 
     def do(self):
+        flag = True
+        for i in self.consume_cat:
+            if self.ship.resourses[i] < self.consume:
+                flag = False
+        if not flag:
+            self.working = False
         self.new_image()

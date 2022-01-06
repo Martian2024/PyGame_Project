@@ -33,6 +33,11 @@ def win():
     screen.blit(fon, (0, 0))
     screen.blit(text, (550, 250))
 
+def defeat():
+    text = wn.render('YOU\'VE LOST', False, pygame.Color('white'))
+    screen.blit(fon, (0, 0))
+    screen.blit(text, (550, 250))
+
 while ship.distance < ship.aim_distance and ship.under_control:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -55,10 +60,13 @@ while ship.distance < ship.aim_distance and ship.under_control:
     show_buttons()
     pygame.display.update()
     clock.tick(fps)
+if ship.under_control:
+    win()
+else:
+    defeat()
+pygame.display.update()
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
-    win()
-    pygame.display.update()
     clock.tick(fps)

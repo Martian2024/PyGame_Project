@@ -35,7 +35,6 @@ class Ship():
         battery1 = Battery(self, 8, 3)
         eng = Engine(self, 11, 0)
         module = Comand_Module(self, 0, 6)
-        module1 = Comand_Module(self, 0, 9)
         for i in self.every_single_unit.keys():
             for a in self.every_single_unit[i]:
                 self.group.add(a)
