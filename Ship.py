@@ -107,4 +107,4 @@ class Ship():
         self.y += ny - oy
         for cat in self.every_single_unit.keys():
             for unit in self.every_single_unit[cat]:
-                unit.rect.move_ip(40, 40)
+                unit.rect.move_ip(nx - ox, ny - oy)
