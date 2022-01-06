@@ -6,6 +6,7 @@ class Farm(Unit):
         super().__init__(ship, x, y, [pygame.image.load('data\\farm.png'), pygame.image.load('data\\farm_not_working.png'),
                                       pygame.image.load('data\\farm_broken.png')], 'food', 3, ['energy'])
         self.health = 10
+        self.max_health = 10
 
 
     def new_image(self):

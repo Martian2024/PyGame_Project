@@ -8,6 +8,7 @@ class Lab(Unit):
                           pygame.image.load('data\\lab_not_working.png'), pygame.image.load('data\\lab_broken.png')],
                          'science', 3, ['energy'])
         self.health = 10
+        self.max_health = 10
 
     def do(self):
         if self.working:

@@ -53,6 +53,9 @@ class Unit(pygame.sprite.Sprite):
                     self.counter += 1
 
     def do(self):
+        if self.health < self.max_health // 2:
+            self.broken = True
+            self.working = False
         if self.working:
             if self.consume_cat != None:
                 flag = True
