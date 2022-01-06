@@ -9,6 +9,7 @@ class Battery(Unit):
         self.max_charge = 10
         self.charge = 0
         self.ship.storages[self.cat].append(self)
+        self.health = 10
 
     def output(self):
         if self.working:

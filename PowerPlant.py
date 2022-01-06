@@ -7,7 +7,7 @@ class PowerPlant(Unit):
                          [pygame.image.load('data\\powerplant1.png'), pygame.image.load('data\\powerplant2.png'),
                           pygame.image.load('data\\powerplant_not_working.png'),
                           pygame.image.load('data\\powerplant_broken.png')], 'energy', 20, None)
-
+        self.health = 10
 
     def output(self):
         if self.working:

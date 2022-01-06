@@ -40,6 +40,13 @@ class Ship():
                 self.group.add(a)
         self.new_group = pygame.sprite.Group()
         self.new_group.add(self.comand_module)
+        self.storages_types = [Lab]
+
+    def destroy(self, unit):
+        self.group.remove(unit)
+        self.every_single_unit[unit.cat].remove(unit)
+        if type(unit) == Battery:
+            self.storages[unit.cat].remove(unit)
 
     def dfs(self, sprite, visited):
         visited.append(sprite)
@@ -56,17 +63,19 @@ class Ship():
                 self.surf.blit(unit.image, (self.cell_size * unit.x, self.cell_size * unit.y))
 
     def all_systems_check(self):
+        for i in self.group.sprites():
+            if i.health == 0:
+                self.destroy(i)
         self.dfs(self.comand_module, [])
         for unit in self.group:
             if unit not in self.new_group.sprites():
-                self.group.remove(unit)
-                self.every_single_unit[unit.cat].remove(unit)
+                self.destroy(unit)
         self.new_group = pygame.sprite.Group()
         self.new_group.add(self.comand_module)
         self.resourses = {'Fe': 0, 'Cu': 0, 'O2': 0, 'CO2': 0, 'Al': 0, 'Si': 0, 'U': 0, 'H2O': 0, 'food': 0,
                           'energy': 0, 'science': 0}
-        for cat in self.storages.keys():
-            for unit in self.storages[cat]:
+        for i in self.storages.keys():
+            for unit in self.storages[i]:
                 unit.output()
         flag = False
         for unit in self.controls:
@@ -77,9 +86,10 @@ class Ship():
         for cat in self.every_single_unit.keys():
             for unit in self.every_single_unit[cat]:
                 unit.do()
-        for cat in self.storages.keys():
-            for unit in self.storages[cat]:
+        for i in self.storages.keys():
+            for unit in self.storages[i]:
                 unit.input()
+        print(self.resourses['energy'])
 
 
     def change(self, x, y):
