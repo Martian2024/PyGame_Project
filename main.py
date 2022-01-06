@@ -19,7 +19,8 @@ buttons.append(telemetry)
 buttons_group = pygame.sprite.Group(telemetry)
 abnormal_blit = False
 pause = False
-mouse_pointer = MousePointer()
+mouse_pointer = MousePointer(0, 0)
+mouse_traking = False
 
 def show_buttons():
     for button in buttons:
@@ -51,9 +52,21 @@ while ship.distance < ship.aim_distance and ship.under_control:
             if event.button == 3:
                 ship.change(event.pos[0] - 150, event.pos[1] - 75)
             elif event.button == 1:
-                if ship.surf.get_rect().collidepoint(*event.pos):
+                mouse_pointer.move(*event.pos)
+                if pygame.sprite.spritecollide(mouse_pointer, buttons_group, False):
                     pass
-                elif
+                else:
+                    mouse_traking = True
+        elif event.type == pygame.MOUSEBUTTONUP:
+            if event.button == 1:
+                mouse_traking = False
+        elif event.type == pygame.MOUSEMOTION:
+            if mouse_traking:
+                mouse_pointer.prev_x = mouse_pointer.x
+                mouse_pointer.prev_y = mouse_pointer.y
+                mouse_pointer.x = event.pos[0]
+                mouse_pointer.y = event.pos[1]
+                ship.move(mouse_pointer.x, mouse_pointer.prev_x, mouse_pointer.y, mouse_pointer.prev_y)
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 if pause:
@@ -64,7 +77,7 @@ while ship.distance < ship.aim_distance and ship.under_control:
         ship.all_systems_check()
         ship.blt()
     screen.blit(fon, (0, 0))
-    screen.blit(ship.surf, (150, 75))
+    screen.blit(ship.surf, (ship.x, ship.y))
     show_progress()
     show_buttons()
     pygame.display.update()

@@ -5,6 +5,8 @@ class MousePointer(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.x = x
         self.y = y
+        self.prev_x = 0
+        self.prev_y = 0
         self.im = pygame.Surface((1, 1), pygame.SRCALPHA)
         self.rect = self.im.get_rect()
 

@@ -10,6 +10,8 @@ from Command_module import Comand_Module
 
 class Ship():
     def __init__(self):
+        self.x = 150
+        self.y = 75
         self.distance = 0
         self.aim_distance = 1000000
         self.velocity = 10
@@ -34,6 +36,7 @@ class Ship():
         farm1 = Farm(self, 11, 3)
         farm2 = Farm(self, 11, 9)
         lab1 = Lab(self, 17, 6)
+        armor = Armor(self, 0, 0)
         for i in self.every_single_unit.keys():
             for a in self.every_single_unit[i]:
                 self.group.add(a)
@@ -98,3 +101,10 @@ class Ship():
                     unit.working = False
                 else:
                     unit.working = True
+
+    def move(self, nx, ox, ny, oy):
+        self.x += nx - ox
+        self.y += ny - oy
+        for cat in self.every_single_unit.keys():
+            for unit in self.every_single_unit[cat]:
+                unit.rect.move_ip(40, 40)
