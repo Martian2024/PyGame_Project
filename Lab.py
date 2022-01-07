@@ -1,7 +1,7 @@
 import  pygame
-from Unit import Unit
+from Storages import Storage
 
-class Lab(Unit):
+class Lab(Storage):
     def __init__(self, ship, x, y):
         super().__init__(ship, x, y,
                          [pygame.image.load('data\\lab1.png'), pygame.image.load('data\\lab2.png'),
@@ -9,6 +9,8 @@ class Lab(Unit):
                          'science', 3, ['energy'])
         self.health = 10
         self.max_health = 10
+        self.charge = 10
+        self.max_charge = 1000
 
     def do(self):
         if self.working:

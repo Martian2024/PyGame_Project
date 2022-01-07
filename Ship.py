@@ -7,6 +7,7 @@ from PowerPlant import PowerPlant
 from Battery import Battery
 from Engine import Engine
 from Command_module import Comand_Module
+from Warehouse import Warehouse
 
 class Ship():
     def __init__(self):
@@ -20,8 +21,8 @@ class Ship():
         self.resourses = {'Fe': 0, 'Cu': 0, 'O2': 0, 'CO2': 0, 'Al': 0, 'Si': 0, 'U': 0, 'H2O': 0, 'food': 0,
                           'energy': 100, 'science': 0}
         self.every_single_unit = {'energy': [], 'commands': [], 'food': [], 'storages': [], 'engines': [], 'science': [], 'defense': [], 'cabins': [],
-                                  'workshops': [], 'armor': []}
-        self.storages = {'energy': []}
+                                  'armor': []}
+        self.storages = {'energy': [], 'science': [], 'storages': []}
         self.group = pygame.sprite.Group()
         self.humans = 10
         self.cell_size = 30
@@ -36,6 +37,7 @@ class Ship():
         farm2 = Farm(self, 11, 9)
         lab1 = Lab(self, 17, 6)
         armor = Armor(self, 0, 0)
+        ware = Warehouse(self, 20, 6)
         for i in self.every_single_unit.keys():
             for a in self.every_single_unit[i]:
                 self.group.add(a)
@@ -79,18 +81,14 @@ class Ship():
         for i in self.storages.keys():
             for unit in self.storages[i]:
                 unit.output()
-        print(self.resourses)
         if not self.comand_module.working:
             self.under_control = False
         for cat in self.every_single_unit.keys():
             for unit in self.every_single_unit[cat]:
                 unit.do()
-        print(self.resourses)
         for i in self.storages.keys():
             for unit in self.storages[i]:
                 unit.input()
-        print(self.resourses)
-        print()
 
 
     def change(self, x, y):
