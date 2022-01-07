@@ -17,7 +17,6 @@ class Menu_Button(Button):
     def __init__(self, x, y, image, ship):
         super().__init__(x, y, image)
         self.ship = ship
-        self.text = pygame.font.Font(None, 12)
 
     def pressed(self, pause, abnormal_blit):
         if abnormal_blit == 'Telemetry':
@@ -28,12 +27,4 @@ class Menu_Button(Button):
             pause = False
         else:
             pause = True
-        while self.status:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                   if event.button == 1:
-                       if self.rect.collidepoint(event.pos):
-                           self.status = False
         return pause, abnormal_blit

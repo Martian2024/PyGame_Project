@@ -7,7 +7,6 @@ class Comand_Module(Unit):
                                       pygame.image.load('data\\command_module2.png'),
                                       pygame.image.load('data\\command_module_not_working.png'),
                                       pygame.image.load('data\\command_module_broken.png')], 'commands', 5, ['energy'])
-        self.ship.controls.append(self)
         self.health = 10
 
     def do(self):

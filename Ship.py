@@ -16,7 +16,6 @@ class Ship():
         self.aim_distance = 1000000
         self.velocity = 10
         self.under_control = True
-        self.controls = []
         self.map = [['n' for _ in range(30)] for _ in range(15)]
         self.resourses = {'Fe': 0, 'Cu': 0, 'O2': 0, 'CO2': 0, 'Al': 0, 'Si': 0, 'U': 0, 'H2O': 0, 'food': 0,
                           'energy': 100, 'science': 0}
@@ -80,18 +79,18 @@ class Ship():
         for i in self.storages.keys():
             for unit in self.storages[i]:
                 unit.output()
-        flag = False
-        for unit in self.controls:
-            if unit.working:
-                flag = True
-        if not flag:
+        print(self.resourses)
+        if not self.comand_module.working:
             self.under_control = False
         for cat in self.every_single_unit.keys():
             for unit in self.every_single_unit[cat]:
                 unit.do()
+        print(self.resourses)
         for i in self.storages.keys():
             for unit in self.storages[i]:
                 unit.input()
+        print(self.resourses)
+        print()
 
 
     def change(self, x, y):
