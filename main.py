@@ -21,6 +21,8 @@ abnormal_blit = False
 pause = False
 mouse_pointer = MousePointer(0, 0)
 mouse_traking = False
+text_telem = pygame.font.Font(None, 24)
+abnormal_blit = 'None'
 
 def show_buttons():
     for button in buttons:
@@ -39,6 +41,19 @@ def win():
     screen.blit(fon, (0, 0))
     screen.blit(text, (550, 250))
 
+def update_ship():
+    ship.all_systems_check()
+    ship.blt()
+    screen.blit(fon, (0, 0))
+    screen.blit(ship.surf, (ship.x, ship.y))
+
+def telem():
+    screen.fill((95, 205, 228))
+    for string in zip([(100, 50), (100, 100), (100, 150), (100, 200), (100, 250), (100, 300), (600, 50), (600, 100),
+                       (600, 150), (600, 200), (600, 250)], ship.resourses.keys()):
+        screen.blit(text_telem.render('{}: {}'.format(string[1], str(ship.resourses[string[1]])), False,
+                                      pygame.Color('white')), string[0])
+
 def defeat():
     text = wn.render('YOU\'VE LOST', False, pygame.Color('white'))
     screen.blit(fon, (0, 0))
@@ -54,7 +69,7 @@ while ship.distance < ship.aim_distance and ship.under_control:
             elif event.button == 1:
                 mouse_pointer.move(*event.pos)
                 if pygame.sprite.spritecollide(mouse_pointer, buttons_group, False):
-                    pass
+                    pause, abnormal_blit = pygame.sprite.spritecollide(mouse_pointer, buttons_group, False)[0].pressed(pause, abnormal_blit)
                 else:
                     mouse_traking = True
         elif event.type == pygame.MOUSEBUTTONUP:
@@ -62,10 +77,7 @@ while ship.distance < ship.aim_distance and ship.under_control:
                 mouse_traking = False
         elif event.type == pygame.MOUSEMOTION:
             if mouse_traking:
-                mouse_pointer.prev_x = mouse_pointer.x
-                mouse_pointer.prev_y = mouse_pointer.y
-                mouse_pointer.x = event.pos[0]
-                mouse_pointer.y = event.pos[1]
+                mouse_pointer.move(*event.pos)
                 ship.move(mouse_pointer.x, mouse_pointer.prev_x, mouse_pointer.y, mouse_pointer.prev_y)
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
@@ -73,11 +85,13 @@ while ship.distance < ship.aim_distance and ship.under_control:
                     pause = False
                 else:
                     pause = True
-    if not pause:
-        ship.all_systems_check()
-        ship.blt()
-    screen.blit(fon, (0, 0))
-    screen.blit(ship.surf, (ship.x, ship.y))
+    if abnormal_blit == 'None':
+        if not pause:
+            update_ship()
+    else:
+        if abnormal_blit == 'Telemetry':
+            telem()
+            print(ship.resourses)
     show_progress()
     show_buttons()
     pygame.display.update()

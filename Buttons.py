@@ -12,7 +12,6 @@ class Button(pygame.sprite.Sprite):
         self.image = image
         self.rect =  image.get_rect()
         self.status = False
-        self.rect.move_ip(x, y)
 
 class Menu_Button(Button):
     def __init__(self, x, y, image, ship):
@@ -20,12 +19,15 @@ class Menu_Button(Button):
         self.ship = ship
         self.text = pygame.font.Font(None, 12)
 
-    def pressed(self, screen):
-        screen.fill(pygame.Color('white'))
-        for cat in self.ship.resourses.keys():
-            screen.blit(self.text.render('{}: {}'.format(cat, str(self.ship.resourses[cat]))),
-                        False, pygame.Color('white'), (0, 0))
-        screen.update()
+    def pressed(self, pause, abnormal_blit):
+        if abnormal_blit == 'Telemetry':
+            abnormal_blit = 'None'
+        else:
+            abnormal_blit = 'Telemetry'
+        if pause:
+            pause = False
+        else:
+            pause = True
         while self.status:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -34,3 +36,4 @@ class Menu_Button(Button):
                    if event.button == 1:
                        if self.rect.collidepoint(event.pos):
                            self.status = False
+        return pause, abnormal_blit

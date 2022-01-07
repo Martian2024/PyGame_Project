@@ -12,3 +12,4 @@ class Engine(Unit):
 
     def do(self):
         self.ship.distance += self.ship.velocity + self.acceleration
+        self.ship.resourses['energy'] += self.consume

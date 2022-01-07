@@ -15,11 +15,12 @@ class Battery(Unit):
         if self.working:
             self.ship.resourses['energy'] += self.charge
             self.charge = 0
-        else:
-            self.ship.resourses['energy'] += 0
 
     def input(self):
-        self.charge += self.ship.resourses['energy'] // len(self.ship.storages['energy'])
+        try:
+            self.charge += self.ship.resourses['energy'] // len(list(filter(lambda x: x.working, self.ship.storages['energy'])))
+        except ZeroDivisionError:
+            self.charge = 0
 
     def do(self):
         pass
