@@ -6,4 +6,10 @@ class Battery(Storage):
         super().__init__(ship, x, y, [pygame.image.load('data\\battery.png'),
                                       pygame.image.load('data\\battery_not_working.png'),
                                       pygame.image.load('data\\battery_broken.png')], 'energy', 0, None)
-        self.max_charge = 1000
+        self.max_charge = 10000
+
+    def do(self):
+        if self.health < self.max_health // 2:
+            self.working = False
+            self.broken = True
+        self.new_image()

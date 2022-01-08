@@ -3,13 +3,17 @@ import sys
 from Ship import Ship
 from Buttons import Button, Menu_Button
 from MousePointer import MousePointer
+from Asteroid import Asteroid
+import random
 
 pygame.font.init()
 
 clock = pygame.time.Clock()
 fps = 60
 screen = pygame.display.set_mode((1200, 600))
-ship = Ship()
+world = pygame.Surface((1200, 600), pygame.SRCALPHA)
+world_rect = world.get_rect()
+ship = Ship(screen)
 fon = pygame.image.load('data\\fon.jpg')
 wn = pygame.font.Font(None, 50)
 prg = pygame.font.Font(None, 25)
@@ -17,16 +21,20 @@ buttons = []
 telemetry = Menu_Button(0, 0, pygame.image.load('data\\button_menu.png'), ship)
 buttons.append(telemetry)
 buttons_group = pygame.sprite.Group(telemetry)
-abnormal_blit = False
 pause = False
 mouse_pointer = MousePointer(0, 0)
 mouse_traking = False
 text_telem = pygame.font.Font(None, 24)
 abnormal_blit = 'None'
+evnt = 'asteroids'
+evnts = ['asteroids', 'failure']
+event_group = pygame.sprite.Group()
+
 
 def show_buttons():
     for button in buttons:
         screen.blit(button.image, (button.x, button.y))
+
 
 def show_progress():
     st = prg.render('start', True, pygame.Color('white'))
@@ -36,16 +44,18 @@ def show_progress():
     pygame.draw.rect(screen, pygame.Color('orange'), (75, 515, ship.distance * (1050 / ship.aim_distance), 5))
     pygame.draw.rect(screen, pygame.Color('white'), (75, 515, 1050, 5), 1)
 
+
 def win():
     text = wn.render('YOU WIN!', False, pygame.Color('white'))
     screen.blit(fon, (0, 0))
     screen.blit(text, (550, 250))
 
-def update_ship():
+
+def update_world():
     ship.all_systems_check()
     ship.blt()
-    screen.blit(fon, (0, 0))
     screen.blit(ship.surf, (ship.x, ship.y))
+
 
 def telem():
     screen.fill((95, 205, 228))
@@ -54,10 +64,26 @@ def telem():
         screen.blit(text_telem.render('{}: {}'.format(string[1], str(ship.resourses[string[1]])), False,
                                       pygame.Color('white')), string[0])
 
+
 def defeat():
     text = wn.render('YOU\'VE LOST', False, pygame.Color('white'))
     screen.blit(fon, (0, 0))
     screen.blit(text, (550, 250))
+
+
+def asteroids():
+    if random.randint(1, 200) == 1:
+        event_group.add(Asteroid(1210, random.randint(10, 290)))
+    for i in event_group.sprites():
+        i.move()
+        if i.rect.topleft[0] < -20:
+            i.kill()
+        else:
+            for a in pygame.sprite.spritecollide(i, ship.group, False):
+                a.health -= 6
+                i.kill()
+    event_group.draw(screen)
+
 
 while ship.distance < ship.aim_distance and ship.under_control:
     for event in pygame.event.get():
@@ -69,7 +95,8 @@ while ship.distance < ship.aim_distance and ship.under_control:
             elif event.button == 1:
                 mouse_pointer.move(*event.pos)
                 if pygame.sprite.spritecollide(mouse_pointer, buttons_group, False):
-                    pause, abnormal_blit = pygame.sprite.spritecollide(mouse_pointer, buttons_group, False)[0].pressed(pause, abnormal_blit)
+                    pause, abnormal_blit = pygame.sprite.spritecollide(mouse_pointer, buttons_group,
+                                                                       False)[0].pressed(pause, abnormal_blit)
                 else:
                     mouse_traking = True
         elif event.type == pygame.MOUSEBUTTONUP:
@@ -78,20 +105,28 @@ while ship.distance < ship.aim_distance and ship.under_control:
         elif event.type == pygame.MOUSEMOTION:
             if mouse_traking:
                 mouse_pointer.move(*event.pos)
-                ship.move(mouse_pointer.x, mouse_pointer.prev_x, mouse_pointer.y, mouse_pointer.prev_y)
+                '''ship.move(mouse_pointer.x, mouse_pointer.prev_x, mouse_pointer.y, mouse_pointer.prev_y)'''
+                for i in ship.group.sprites():
+                    i.rect.move_ip(mouse_pointer.x - mouse_pointer.prev_x, mouse_pointer.y - mouse_pointer.prev_y)
+                for i in event_group.sprites():
+                    i.rect.move_ip(mouse_pointer.x - mouse_pointer.prev_x, mouse_pointer.y - mouse_pointer.prev_y)
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 if pause:
                     pause = False
                 else:
                     pause = True
+    screen.blit(fon, (0, 0))
     if abnormal_blit == 'None':
         if not pause:
-            update_ship()
+            update_world()
+            if evnt == None and random.randint(1, 100) == 1:
+                evnt = random.choice(evnts)
+            if evnt == 'asteroids':
+                asteroids()
     else:
         if abnormal_blit == 'Telemetry':
             telem()
-            print(ship.resourses)
     show_progress()
     show_buttons()
     pygame.display.update()
