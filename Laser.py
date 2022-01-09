@@ -23,7 +23,8 @@ class Laser(Unit):
             if self.cooldown == 0:
                 pygame.draw.line(self.ship.screen, (0, 211, 255), self.rect.center, ast.rect.center, 5)
                 ast.kill()
-            if 0 < self.cooldown < 100:
+                self.cooldown += 1
+            if 0 < self.cooldown < 15:
                 self.cooldown += 1
             else:
                 self.cooldown = 0
