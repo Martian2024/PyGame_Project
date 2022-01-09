@@ -8,6 +8,7 @@ from Battery import Battery
 from Engine import Engine
 from Command_module import Comand_Module
 from Warehouse import Warehouse
+from Laser import Laser
 
 
 class Ship():
@@ -26,10 +27,12 @@ class Ship():
                                   'armor': []}
         self.storages = {'energy': [], 'science': [], 'storages': []}
         self.group = pygame.sprite.Group()
+        self.cannons = []
         self.humans = 10
         self.cell_size = 30
         self.screen = screen
-        eng = Engine(self, 0, 6)
+        eng = Engine(self, 0, 3)
+        eng1 = Engine(self, 0, 9)
         plant1 = PowerPlant(self, 8, 6)
         plant2 = PowerPlant(self, 11, 6)
         self.comand_module = Comand_Module(self, 14, 6)
@@ -40,6 +43,11 @@ class Ship():
         lab1 = Lab(self, 17, 6)
         armor = Armor(self, 0, 0)
         ware = Warehouse(self, 20, 6)
+        arm = Armor(self, 23, 6)
+        arm = Armor(self, 23, 7)
+        arm = Armor(self, 23, 8)
+        laser1 = Laser(self, 8, 0)
+        laser2 = Laser(self, 8, 12)
         for i in self.every_single_unit.keys():
             for a in self.every_single_unit[i]:
                 self.group.add(a)
@@ -107,3 +115,10 @@ class Ship():
         for cat in self.every_single_unit.keys():
             for unit in self.every_single_unit[cat]:
                 unit.rect.move_ip(nx - ox, ny - oy)
+
+
+    def shoot(self, event_group):
+        for cannon in self.cannons:
+            if pygame.sprite.spritecollideany(cannon, event_group, pygame.sprite.collide_circle_ratio(3.5)) != None:
+                for i in [pygame.sprite.spritecollideany(cannon, event_group, pygame.sprite.collide_circle_ratio(3.5))]:
+                    cannon.shoot(i)

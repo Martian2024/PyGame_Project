@@ -73,7 +73,7 @@ def defeat():
 
 def asteroids():
     if random.randint(1, 200) == 1:
-        event_group.add(Asteroid(1210, random.randint(10, 290)))
+        event_group.add(Asteroid(1210, random.randint(10, 590)))
     for i in event_group.sprites():
         i.move()
         if i.rect.topleft[0] < -20:
@@ -82,6 +82,7 @@ def asteroids():
             for a in pygame.sprite.spritecollide(i, ship.group, False):
                 a.health -= 6
                 i.kill()
+    ship.shoot(event_group)
     event_group.draw(screen)
 
 
@@ -91,7 +92,7 @@ while ship.distance < ship.aim_distance and ship.under_control:
             sys.exit()
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 3:
-                ship.change(event.pos[0] - 150, event.pos[1] - 75)
+                ship.change(event.pos[0], event.pos[1])
             elif event.button == 1:
                 mouse_pointer.move(*event.pos)
                 if pygame.sprite.spritecollide(mouse_pointer, buttons_group, False):
@@ -105,9 +106,7 @@ while ship.distance < ship.aim_distance and ship.under_control:
         elif event.type == pygame.MOUSEMOTION:
             if mouse_traking:
                 mouse_pointer.move(*event.pos)
-                '''ship.move(mouse_pointer.x, mouse_pointer.prev_x, mouse_pointer.y, mouse_pointer.prev_y)'''
-                for i in ship.group.sprites():
-                    i.rect.move_ip(mouse_pointer.x - mouse_pointer.prev_x, mouse_pointer.y - mouse_pointer.prev_y)
+                ship.move(mouse_pointer.x, mouse_pointer.prev_x, mouse_pointer.y, mouse_pointer.prev_y)
                 for i in event_group.sprites():
                     i.rect.move_ip(mouse_pointer.x - mouse_pointer.prev_x, mouse_pointer.y - mouse_pointer.prev_y)
         elif event.type == pygame.KEYDOWN:

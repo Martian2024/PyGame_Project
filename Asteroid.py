@@ -6,16 +6,24 @@ class Asteroid(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.x = x
         self.y = y
-        self.image = pygame.image.load('data\\asteroid.png')
+        if random.randint(1, 3) == 1:
+            self.image = pygame.image.load('data\\bigger_asteroid.png')
+            self.size = 'big'
+        else:
+            self.size = 'small'
+            self.image = pygame.image.load('data\\asteroid.png')
         self.rect = self.image.get_rect()
         self.rect.move_ip(x, y)
-        self.speed = -5
+        self.speed = random.randint(-8, -2)
         self.speed_angle = random.randint(-15, 15)
         self.angle = 0
 
     def move(self):
         self.angle += self.speed_angle
-        self.image = pygame.transform.rotate(pygame.image.load('data\\asteroid.png'), self.angle)
+        if self.size == 'big':
+            self.image = pygame.transform.rotate(pygame.image.load('data\\bigger_asteroid.png'), self.angle)
+        else:
+            self.image = pygame.transform.rotate(pygame.image.load('data\\asteroid.png'), self.angle)
         self.x += self.speed
         self.rect = self.image.get_rect()
         self.rect.center = (self.x, self.y)
