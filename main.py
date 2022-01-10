@@ -5,6 +5,7 @@ from Buttons import Button, Menu_Button
 from MousePointer import MousePointer
 from Asteroid import Asteroid
 from Engine import  Engine
+from Command_module import Comand_Module
 import random
 
 pygame.font.init()
@@ -27,8 +28,8 @@ mouse_pointer = MousePointer(0, 0)
 mouse_traking = False
 text_telem = pygame.font.Font(None, 24)
 abnormal_blit = 'None'
-evnt = 'asteroids'
-evnts = ['asteroids', 'failure']
+evnt = None
+evnts = ['asteroids', 'asteroids', None, 'failure']
 evnt_counter = 0
 event_group = pygame.sprite.Group()
 motion_x = 0
@@ -45,6 +46,11 @@ def show_progress():
     screen.blit(st, (65, 520))
     fn = prg.render('finish', True, pygame.Color('white'))
     screen.blit(fn, (1110, 520))
+    if evnt == None:
+        danger = prg.render('Danger: you\'re in deep space, bro...', True, pygame.Color('white'))
+    else:
+        danger = prg.render('Danger: {}'.format(evnt), True, pygame.Color('white'))
+    screen.blit(danger, (65, 550))
     pygame.draw.rect(screen, pygame.Color('orange'), (75, 515, ship.distance * (1050 / ship.aim_distance), 5))
     pygame.draw.rect(screen, pygame.Color('white'), (75, 515, 1050, 5), 1)
 
@@ -76,8 +82,8 @@ def defeat():
 
 
 def asteroids():
-    if random.randint(1, 50) == 1:
-        event_group.add(Asteroid(1210, random.randint(10, 590)))
+    if random.randint(1, int(10 / current_dif)) == 1 and evnt_counter < 500:
+        event_group.add(Asteroid(1210, random.randint(10, 590), current_dif))
     for i in event_group.sprites():
         i.move()
         if i.rect.topleft[0] < -20:
@@ -97,21 +103,19 @@ while ship.distance < ship.aim_distance and ship.under_control:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 3:
                 ship.change(event.pos[0], event.pos[1])
-            '''elif event.button == 1:
+            elif event.button == 1:
                 mouse_pointer.move(*event.pos)
                 if pygame.sprite.spritecollide(mouse_pointer, buttons_group, False):
                     pause, abnormal_blit = pygame.sprite.spritecollide(mouse_pointer, buttons_group,
                                                                        False)[0].pressed(pause, abnormal_blit)
-                else:
-                    mouse_traking = True'''
         elif event.type == pygame.MOUSEBUTTONUP:
             if event.button == 1:
                 mouse_traking = False
         elif event.type == pygame.MOUSEMOTION:
-            if mouse_traking:
+           ''' if mouse_traking:
                 mouse_pointer.move(*event.pos)
                 ship.move(mouse_pointer.x, mouse_pointer.prev_x, mouse_pointer.y, mouse_pointer.prev_y)
-                world_rect.move_ip(mouse_pointer.x - mouse_pointer.prev_x, mouse_pointer.y - mouse_pointer.prev_y)
+                world_rect.move_ip(mouse_pointer.x - mouse_pointer.prev_x, mouse_pointer.y - mouse_pointer.prev_y)'''
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 if pause:
@@ -163,17 +167,27 @@ while ship.distance < ship.aim_distance and ship.under_control:
         motion_x = 0
     elif ship.comand_module.rect.left < 0 and motion_x < 0:
         motion_x = 0
+    current_dif = ship.distance / ship.aim_distance
     ship.move(ship.x + motion_x, ship.x, ship.y + motion_y, ship.y)
     if abnormal_blit == 'None':
         if not pause:
             screen.blit(fon, (0, 0))
             update_world()
-            if evnt == None and random.randint(1, 100) == 1:
+            if evnt == None and random.randint(1, 10) == 1 and evnt_counter > 1000 and ship.distance < 950000:
                 evnt = random.choice(evnts)
+                evnt_counter = 0
             if evnt == 'asteroids':
                 asteroids()
+            elif evnt == 'failure':
+                unit = random.choice(ship.group.sprites())
+                while type(unit) == Comand_Module:
+                    unit = random.choice(ship.group.sprites())
+                unit.broken = True
+                unit.working = False
+                evnt_counter = 1000
             evnt_counter += 1
-
+            if evnt_counter == 1000:
+                evnt = None
     else:
         if abnormal_blit == 'Telemetry':
             telem()

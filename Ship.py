@@ -15,7 +15,7 @@ class Ship():
     def __init__(self, screen):
         self.x = 150
         self.y = 75
-        self.distance = 0
+        self.distance = 900000
         self.aim_distance = 1000000
         self.velocity = 10
         self.under_control = True
@@ -31,22 +31,21 @@ class Ship():
         self.humans = 10
         self.cell_size = 30
         self.screen = screen
-        eng = Engine(self, 0, 3)
-        eng1 = Engine(self, 0, 9)
-        plant1 = PowerPlant(self, 8, 6)
-        plant2 = PowerPlant(self, 11, 6)
-        self.comand_module = Comand_Module(self, 14, 6)
+        eng = Engine(self, 0, 0)
+        eng1 = Engine(self, 0, 1)
+        plant1 = PowerPlant(self, 2, 0)
+        plant2 = PowerPlant(self, 2, 1)
+        self.comand_module = Comand_Module(self, 3, 0)
         bat1 = Battery(self, 8, 3)
         bat2 = Battery(self, 8, 9)
         farm1 = Farm(self, 11, 3)
         self.farm2 = Farm(self, 11, 9)
         lab1 = Lab(self, 17, 6)
-        armor = Armor(self, 0, 0)
         ware = Warehouse(self, 20, 6)
         arm = Armor(self, 23, 6)
         arm = Armor(self, 23, 7)
         arm = Armor(self, 23, 8)
-        laser1 = Laser(self, 8, 0)
+        laser1 = Laser(self, 3, 1)
         laser2 = Laser(self, 8, 12)
         for i in self.every_single_unit.keys():
             for a in self.every_single_unit[i]:
