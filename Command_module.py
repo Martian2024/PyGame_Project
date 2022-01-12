@@ -1,6 +1,7 @@
 import pygame
 from Unit import Unit
 
+
 class Comand_Module(Unit):
     def __init__(self, ship, x, y):
         super().__init__(ship, x, y, [pygame.image.load('data\\command_module1.png'),

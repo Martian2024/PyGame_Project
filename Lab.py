@@ -13,6 +13,9 @@ class Lab(Storage):
         self.max_charge = 1000
 
     def do(self):
+        if self.health < self.max_health // 2:
+            self.working = False
+            self.broken = True
         if self.working:
             if self.ship.resourses['energy'] >= 3:
                 self.ship.resourses['science'] += 3

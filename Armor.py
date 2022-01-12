@@ -5,8 +5,11 @@ class Armor(Unit):
     def __init__(self, ship, x, y):
         super().__init__(ship, x, y, [pygame.image.load('data\\armor_ok.png'), pygame.image.load('data\\armor_ok.png'),
                                       pygame.image.load('data\\armor_damaged.png')], 'armor', 0, None)
-        self.health = 100
-        self.max_haelth = 100
+        self.health = 10
+        self.max_haelth = 10
 
     def do(self):
-        pass
+        if self.health < self.max_health // 2:
+            self.broken = True
+            self.working = False
+        self.new_image()

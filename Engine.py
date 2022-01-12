@@ -11,8 +11,12 @@ class Engine(Unit):
         self.health = 10
 
     def do(self):
+        if self.health < self.max_health // 2:
+            self.broken = True
+            self.working = False
         if self.working:
             self.ship.distance += self.ship.velocity + self.acceleration
             self.ship.resourses['energy'] += self.consume
         else:
             self.ship.distance += self.ship.velocity
+        self.new_image()

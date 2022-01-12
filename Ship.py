@@ -8,36 +8,45 @@ from Battery import Battery
 from Engine import Engine
 from Command_module import Comand_Module
 from Warehouse import Warehouse
+from Laser import Laser
+
 
 class Ship():
-    def __init__(self):
+    def __init__(self, screen):
         self.x = 150
         self.y = 75
-        self.distance = 0
+        self.distance = 900000
         self.aim_distance = 1000000
         self.velocity = 10
         self.under_control = True
         self.map = [['n' for _ in range(30)] for _ in range(15)]
         self.resourses = {'Fe': 0, 'Cu': 0, 'O2': 0, 'CO2': 0, 'Al': 0, 'Si': 0, 'U': 0, 'H2O': 0, 'food': 0,
                           'energy': 100, 'science': 0}
-        self.every_single_unit = {'energy': [], 'commands': [], 'food': [], 'storages': [], 'engines': [], 'science': [], 'defense': [], 'cabins': [],
+        self.every_single_unit = {'energy': [], 'commands': [], 'food': [], 'storages': [], 'engines': [],
+                                  'science': [], 'defense': [], 'cabins': [],
                                   'armor': []}
         self.storages = {'energy': [], 'science': [], 'storages': []}
         self.group = pygame.sprite.Group()
+        self.cannons = []
         self.humans = 10
         self.cell_size = 30
-        self.surf = pygame.Surface((self.cell_size * len(self.map[0]), self.cell_size * len(self.map)), pygame.SRCALPHA)
-        eng = Engine(self, 0, 6)
-        plant1 = PowerPlant(self, 8, 6)
-        plant2 = PowerPlant(self, 11, 6)
-        self.comand_module = Comand_Module(self, 14, 6)
+        self.screen = screen
+        eng = Engine(self, 0, 0)
+        eng1 = Engine(self, 0, 1)
+        plant1 = PowerPlant(self, 2, 0)
+        plant2 = PowerPlant(self, 2, 1)
+        self.comand_module = Comand_Module(self, 3, 0)
         bat1 = Battery(self, 8, 3)
         bat2 = Battery(self, 8, 9)
         farm1 = Farm(self, 11, 3)
-        farm2 = Farm(self, 11, 9)
+        self.farm2 = Farm(self, 11, 9)
         lab1 = Lab(self, 17, 6)
-        armor = Armor(self, 0, 0)
         ware = Warehouse(self, 20, 6)
+        arm = Armor(self, 23, 6)
+        arm = Armor(self, 23, 7)
+        arm = Armor(self, 23, 8)
+        laser1 = Laser(self, 3, 1)
+        laser2 = Laser(self, 8, 12)
         for i in self.every_single_unit.keys():
             for a in self.every_single_unit[i]:
                 self.group.add(a)
@@ -64,11 +73,12 @@ class Ship():
         for i in self.every_single_unit.keys():
             for unit in self.every_single_unit[i]:
                 unit.new_image()
-                self.surf.blit(unit.image, (self.cell_size * unit.x, self.cell_size * unit.y))
+        self.group.draw(self.screen)
+
 
     def all_systems_check(self):
         for i in self.group.sprites():
-            if i.health == 0:
+            if i.health <= 0:
                 self.destroy(i)
         self.dfs(self.comand_module, [])
         for unit in self.group:
@@ -90,7 +100,6 @@ class Ship():
             for unit in self.storages[i]:
                 unit.input()
 
-
     def change(self, x, y):
         for unit in self.group.sprites():
             if unit.rect.collidepoint(x, y):
@@ -105,3 +114,10 @@ class Ship():
         for cat in self.every_single_unit.keys():
             for unit in self.every_single_unit[cat]:
                 unit.rect.move_ip(nx - ox, ny - oy)
+
+
+    def shoot(self, event_group):
+        for cannon in self.cannons:
+            if pygame.sprite.spritecollideany(cannon, event_group, pygame.sprite.collide_circle_ratio(3.5)) != None:
+                for i in [pygame.sprite.spritecollideany(cannon, event_group, pygame.sprite.collide_circle_ratio(3.5))]:
+                    cannon.shoot(i)
