@@ -82,7 +82,7 @@ def defeat():
 
 
 def asteroids():
-    if random.randint(1, int(10 / current_dif)) == 1 and evnt_counter < 500:
+    if random.randint(1, int(100 / current_dif)) == 1 and evnt_counter < 500:
         event_group.add(Asteroid(1210, random.randint(10, 590), current_dif))
     for i in event_group.sprites():
         i.move()
