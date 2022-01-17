@@ -1,4 +1,5 @@
 import pygame
+import random
 
 from Farm import Farm
 from Lab import Lab
@@ -87,8 +88,8 @@ class Ship():
                 self.destroy(unit)
         self.new_group = pygame.sprite.Group()
         self.new_group.add(self.comand_module)
-        self.resourses = {'Fe': 0, 'Cu': 0, 'O2': 0, 'CO2': 0, 'Al': 0, 'Si': 0, 'U': 0, 'H2O': 0, 'food': 0,
-                          'energy': 0, 'science': 0}
+        self.resourses = {'Fe': 0, 'Cu': 0, 'O2': 0, 'CO2': 0, 'Al': 0, 'Si': 0, 'U': 0, 'H2O': 0,
+                          'food': 0, 'energy': 0, 'science': 0}
         for i in self.storages.keys():
             for unit in self.storages[i]:
                 unit.output()
@@ -127,3 +128,5 @@ class Ship():
                         cannon.shoot(i)
                     elif type(i) == Container:
                         cannon.grab(i)
+                        for i in self.resourses.keys():
+                            self.resourses[i] += random.randint(100, 100)

@@ -14,7 +14,7 @@ class Asteroid(pygame.sprite.Sprite):
             self.image = pygame.image.load('data\\asteroid.png')
         self.rect = self.image.get_rect()
         self.rect.move_ip(x, y)
-        self.speed = random.randint(int(-8 + (-1 / current_dif)), -2)
+        self.speed = random.randint(int(-4 + (-1 / current_dif)), -2)
         self.speed_angle = random.randint(-15, 15)
         self.angle = 0
 

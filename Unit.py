@@ -81,7 +81,9 @@ class Unit(pygame.sprite.Sprite):
                             y // self.ship.cell_size * self.ship.cell_size)
 
     def build(self, x, y):
-        self.rect.center = (x // self.ship.cell_size * self.ship.cell_size,
-                            y // self.ship.cell_size * self.ship.cell_size)
+        self.rect.topleft = (x // self.ship.cell_size * self.ship.cell_size - 1,
+                            y // self.ship.cell_size * self.ship.cell_size - 1)
         self.ship.every_single_unit[self.cat].append(self)
         self.ship.group.add(self)
+        for i in self.build_cat.keys():
+            self.ship.resourses[i] -= self.build_cat[i]

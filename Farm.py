@@ -4,10 +4,11 @@ from Unit import Unit
 class Farm(Unit):
     def __init__(self, ship, x, y, building=False):
         super().__init__(ship, x, y, [pygame.image.load('data\\farm.png'), pygame.image.load('data\\farm_not_working.png'),
-                                      pygame.image.load('data\\farm_broken.png')], 'food', 3, ['energy'],
-                         building=building)
+                                      pygame.image.load('data\\farm_broken.png')],
+                         'food', 3, ['energy', 'CO2'], building=building)
         self.health = 10
         self.max_health = 10
+        self.build_cat = {'Fe': 10, 'Cu': 5, 'Si': 7}
 
 
     def new_image(self):
