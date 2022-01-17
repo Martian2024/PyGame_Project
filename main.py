@@ -107,8 +107,8 @@ while ship.distance < ship.aim_distance and ship.under_control:
             elif event.button == 1:
                 mouse_pointer.move(*event.pos)
                 if building:
-                    building_module.build(*(mouse_pointer.x // ship.cell_size,
-                                            mouse_pointer.y // ship.cell_size))
+                    building_module.build(*(mouse_pointer.x,
+                                            mouse_pointer.y))
                     building = False
                     pause = False
                     mouse_traking = False
@@ -117,6 +117,8 @@ while ship.distance < ship.aim_distance and ship.under_control:
         elif event.type == pygame.MOUSEMOTION:
             if mouse_traking and building:
                 mouse_pointer.move(*event.pos)
+                building_module.rect.center = (event.pos[0] // ship.cell_size * ship.cell_size,
+                                               event.pos[1] // ship.cell_size * ship.cell_size)
             elif mouse_traking:
                 mouse_pointer.move(*event.pos)
                 ship.move(mouse_pointer.x, mouse_pointer.prev_x, mouse_pointer.y, mouse_pointer.prev_y)
@@ -186,7 +188,7 @@ while ship.distance < ship.aim_distance and ship.under_control:
                 building = True
                 mouse_traking = True
                 building_wind.hide()
-                ship.move(600, ship.comand_module.rect.center[0], 300, ship.comand_module.rect.center[1])
+                ship.move(0, ship.x, 0, ship.y)
                 if event.ui_object_id == '#building_window.#panel_container.#battery_button':
                     building_module = Battery(ship, 0, 0, building=True)
                 elif event.ui_object_id == '#building_window.#panel_container.#engine_button':
@@ -201,6 +203,8 @@ while ship.distance < ship.aim_distance and ship.under_control:
                     building_module = Laser(ship, 0, 0, building=True)
                 elif event.ui_object_id == '#building_window.#panel_container.#armor_button':
                     building_module = Armor(ship, 0, 0, building=True)
+                building_module.rect.center = (mouse_pointer.x // ship.cell_size * ship.cell_size,
+                                            mouse_pointer.y // ship.cell_size * ship.cell_size)
         manager.process_events(event)
     manager.update(0)
     if ship.comand_module.rect.bottom > screen.get_height() and motion_y > 0:
@@ -240,12 +244,19 @@ while ship.distance < ship.aim_distance and ship.under_control:
         screen.blit(pygame.font.Font(None, 35).render('PAUSE', False, pygame.Color('white')), (550, 550))
     update_world()
     if building:
+        flag = False
         for i in ship.group.sprites():
-            if pygame.Rect(building_module.rect.left - 1, building_module.rect.top - 1,
-                           building_module.rect.width + 10, building_module.rect.height + 10).colliderect(i.rect):
-                building_module.image.fill(pygame.Color('red'))
-            screen.blit(building_module.image, (mouse_pointer.x // ship.cell_size * ship.cell_size,
-                                                mouse_pointer.y // ship.cell_size * ship.cell_size))
+            if building_module.rect.colliderect(i.rect):
+                flag = True
+        if flag:
+            building_module.image = pygame.Surface((building_module.rect.width, building_module.rect.height),
+                                                   pygame.SRCALPHA)
+            building_module.image.fill(pygame.Color('red'))
+        else:
+            building_module.image = building_module.images[0]
+        screen.blit(building_module.image,
+                        (mouse_pointer.x // ship.cell_size * ship.cell_size - building_module.rect.width // 2,
+                         mouse_pointer.y // ship.cell_size * ship.cell_size - building_module.rect.height // 2))
     show_progress()
     manager.draw_ui(screen)
     pygame.display.update()

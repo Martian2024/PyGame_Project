@@ -30,6 +30,7 @@ class Ship():
         self.storages = {'energy': [], 'science': [], 'storages': []}
         self.group = pygame.sprite.Group()
         self.cannons = []
+        self.comand_modules = []
         self.humans = 10
         self.cell_size = 30
         self.screen = screen
@@ -91,8 +92,10 @@ class Ship():
         for i in self.storages.keys():
             for unit in self.storages[i]:
                 unit.output()
-        if not self.comand_module.working:
-            self.under_control = False
+        self.under_control = False
+        for i in self.comand_modules:
+            if i.working:
+                self.under_control = True
         for cat in self.every_single_unit.keys():
             for unit in self.every_single_unit[cat]:
                 unit.do()

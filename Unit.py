@@ -24,8 +24,8 @@ class Unit(pygame.sprite.Sprite):
             self.image_working = self.images[0]
             self.image_not_working = images[-2]
             self.image_broken = images[-1]
-        self.rect = pygame.Rect(x * ship.cell_size - 1, y * ship.cell_size - 1, self.image.get_width() + 2,
-                                self.image.get_height() + 2)
+        self.rect = pygame.Rect(x * ship.cell_size - 1 + self.ship.x, y * ship.cell_size - 1 + self.ship.y,
+                                self.image.get_width() + 2, self.image.get_height() + 2)
         if not building:
             self.ship.every_single_unit[self.cat].append(self)
             self.ship.group.add(self)
@@ -77,10 +77,11 @@ class Unit(pygame.sprite.Sprite):
         self.new_image()
 
     def move(self, x, y):
-        '''self.rect.move_ip(x // self.ship.cell_size, y // self.ship.cell_size)'''
-        self.rect.move_ip(x, y)
+        self.rect.center = (x // self.ship.cell_size * self.ship.cell_size,
+                            y // self.ship.cell_size * self.ship.cell_size)
 
     def build(self, x, y):
-        self.rect.move_ip(x * self.ship.cell_size - self.rect.left, y * self.ship.cell_size - self.rect.top)
+        self.rect.center = (x // self.ship.cell_size * self.ship.cell_size,
+                            y // self.ship.cell_size * self.ship.cell_size)
         self.ship.every_single_unit[self.cat].append(self)
         self.ship.group.add(self)

@@ -10,6 +10,7 @@ class Comand_Module(Unit):
                                       pygame.image.load('data\\command_module_broken.png')], 'commands', 5, ['energy'],
                          building=building)
         self.health = 10
+        self.ship.comand_modules.append(self)
 
     def do(self):
         flag = True

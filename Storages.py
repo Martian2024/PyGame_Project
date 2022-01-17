@@ -29,6 +29,8 @@ class Storage(Unit):
         pass
 
     def build(self, x, y):
-        self.rect.move_ip(x * self.ship.cell_size, y * self.ship.cell_size)
+        self.rect.center = (x // self.ship.cell_size * self.ship.cell_size,
+                            y // self.ship.cell_size * self.ship.cell_size)
         self.ship.every_single_unit[self.cat].append(self)
         self.ship.group.add(self)
+        self.ship.storages[self.cat].append(self)
