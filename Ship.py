@@ -9,17 +9,19 @@ from Engine import Engine
 from Command_module import Comand_Module
 from Warehouse import Warehouse
 from Laser import Laser
+from Asteroid import Asteroid
+from Container import Container
 
 
 class Ship():
     def __init__(self, screen):
         self.x = 150
         self.y = 75
-        self.distance = 900000
+        self.distance = 0
         self.aim_distance = 1000000
         self.velocity = 10
         self.under_control = True
-        self.map = [['n' for _ in range(30)] for _ in range(15)]
+        self.map = [['n' for _ in range(30)] for _ in range(14)]
         self.resourses = {'Fe': 0, 'Cu': 0, 'O2': 0, 'CO2': 0, 'Al': 0, 'Si': 0, 'U': 0, 'H2O': 0, 'food': 0,
                           'energy': 100, 'science': 0}
         self.every_single_unit = {'energy': [], 'commands': [], 'food': [], 'storages': [], 'engines': [],
@@ -31,15 +33,13 @@ class Ship():
         self.humans = 10
         self.cell_size = 30
         self.screen = screen
-        eng = Engine(self, 0, 0)
-        eng1 = Engine(self, 0, 1)
-        plant1 = PowerPlant(self, 2, 0)
-        plant2 = PowerPlant(self, 2, 1)
-        self.comand_module = Comand_Module(self, 3, 0)
+        eng = Engine(self, 14, 7)
+        eng1 = Engine(self, 14, 9)
+        plant1 = PowerPlant(self, 18, 7)
+        plant2 = PowerPlant(self, 18, 9)
+        self.comand_module = Comand_Module(self, 16, 11)
         bat1 = Battery(self, 8, 3)
         bat2 = Battery(self, 8, 9)
-        farm1 = Farm(self, 11, 3)
-        self.farm2 = Farm(self, 11, 9)
         lab1 = Lab(self, 17, 6)
         ware = Warehouse(self, 20, 6)
         arm = Armor(self, 23, 6)
@@ -109,8 +109,8 @@ class Ship():
                     unit.working = True
 
     def move(self, nx, ox, ny, oy):
-        self.x += nx - ox
-        self.y += ny - oy
+        self.x = nx
+        self.y = ny
         for cat in self.every_single_unit.keys():
             for unit in self.every_single_unit[cat]:
                 unit.rect.move_ip(nx - ox, ny - oy)
@@ -120,4 +120,7 @@ class Ship():
         for cannon in self.cannons:
             if pygame.sprite.spritecollideany(cannon, event_group, pygame.sprite.collide_circle_ratio(3.5)) != None:
                 for i in [pygame.sprite.spritecollideany(cannon, event_group, pygame.sprite.collide_circle_ratio(3.5))]:
-                    cannon.shoot(i)
+                    if type(i) == Asteroid:
+                        cannon.shoot(i)
+                    elif type(i) == Container:
+                        cannon.grab(i)

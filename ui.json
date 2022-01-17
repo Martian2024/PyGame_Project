@@ -1,0 +1,194 @@
+{
+  "@close_button": {
+    "images": {
+      "normal_image": {
+        "path": "data\\close_button1.png"
+      },
+      "selected_image": {
+        "path": "data\\close_button2.png"
+      }
+    }
+  },
+  "#opening_window": {
+    "images": {
+      "background_image": {
+        "path": "data\\resourses_menu.png"
+      }
+    }
+  },
+  "@resourses_label":
+  {
+    "colours":
+    {
+      "dark_bg": "#9592a9"
+    }
+    },
+  "#telemetry":
+  {
+    "images":
+    {
+      "normal_image":
+      {
+        "path": "data\\button_menu2.png"
+      },
+      "selected_image":
+      {
+        "path": "data\\button_menu1.png"
+      }
+    }
+  },
+  "#armor_button":
+  {
+    "images":
+    {
+      "normal_image":
+      {
+        "path": "data\\armor_ok.png"
+      }
+    },
+    "colours":
+    {
+      "normal_bg": "#9592a9",
+      "normal_border": "#9592a9",
+      "hovered_bg": "#cfcce4",
+      "hovered_border": "#cfcce4"
+    }
+  },
+  "#battery_button":
+  {
+    "images":
+    {
+      "normal_image":
+      {
+        "path": "data\\battery.png"
+      }
+    },
+    "colours":
+    {
+      "normal_bg": "#9592a9",
+      "normal_border": "#9592a9",
+      "hovered_bg": "#cfcce4",
+      "hovered_border": "#cfcce4"
+    }
+  },
+  "#lab_button":
+  {
+    "images":
+    {
+      "normal_image":
+      {
+        "path": "data\\lab1.png"
+      }
+    },
+    "colours":
+    {
+      "normal_bg": "#9592a9",
+      "normal_border": "#9592a9",
+      "hovered_bg": "#cfcce4",
+      "hovered_border": "#cfcce4"
+    }
+  },
+  "#powerplant_button":
+  {
+    "images":
+    {
+      "normal_image":
+      {
+        "path": "data\\powerplant1.png"
+      }
+    },
+    "colours":
+    {
+      "normal_bg": "#9592a9",
+      "normal_border": "#9592a9",
+      "hovered_bg": "#cfcce4",
+      "hovered_border": "#cfcce4"
+    }
+  },
+  "#farm_button":
+  {
+    "images":
+    {
+      "normal_image":
+      {
+        "path": "data\\farm.png"
+      }
+    },
+    "colours":
+    {
+      "normal_bg": "#9592a9",
+      "normal_border": "#9592a9",
+      "hovered_bg": "#cfcce4",
+      "hovered_border": "#cfcce4"
+    }
+  },
+  "#laser_button":
+  {
+    "images":
+    {
+      "normal_image":
+      {
+        "path": "data\\laser_icon1.png"
+      }
+    },
+    "colours":
+    {
+      "normal_bg": "#9592a9",
+      "normal_border": "#9592a9",
+      "hovered_bg": "#cfcce4",
+      "hovered_border": "#cfcce4"
+    }
+  },
+  "#engine_button":
+  {
+    "images":
+    {
+      "normal_image":
+      {
+        "path": "data\\engine_icon1.png"
+      }
+    },
+    "colours":
+    {
+      "normal_bg": "#9592a9",
+      "normal_border": "#9592a9",
+      "hovered_bg": "#cfcce4",
+      "hovered_border": "#cfcce4"
+    }
+  },
+  "#building_button":
+  {
+    "images":
+    {
+      "normal_image":
+      {
+        "path": "data\\building_button1.png"
+      },
+      "selected_image":
+      {
+        "path": "data\\building_button2.png"
+      }
+    }
+    },
+  "tooltip":
+  {
+    "misc":
+    {
+      "rect_width": "100"
+    },
+     "tool_tip.text_box":
+     {
+         "colours":
+         {
+             "dark_bg":"#505050",
+             "normal_border": "#FFFFFF"
+         },
+
+         "misc":
+         {
+             "border_width": "2",
+             "padding": "5,5"
+         }
+     }
+  }
+  }
