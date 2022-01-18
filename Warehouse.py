@@ -8,8 +8,8 @@ class Warehouse(Storage):
                                       pygame.image.load('data\\storage.png')],
                          'storages', 0, None,  building=building)
         self.charges = {'Fe': 0, 'Cu': 0, 'O2': 0, 'CO2': 0, 'Al': 0, 'Si': 0, 'U': 0, 'H2O': 0, 'food': 0}
-        self.max_charges = {'Fe': 100, 'Cu': 100, 'O2': 100, 'CO2': 100, 'Al': 100, 'Si': 100, 'U': 100, 'H2O': 100,
-                            'food': 100}
+        self.max_charges = {'Fe': 1000, 'Cu': 1000, 'O2': 1000, 'CO2': 1000, 'Al': 1000, 'Si': 1000, 'U': 1000,
+                            'H2O': 1000, 'food': 1000}
         self.build_cat = {'Fe': 10, 'Cu': 2}
 
     def output(self):
