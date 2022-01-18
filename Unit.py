@@ -1,7 +1,7 @@
 import pygame
 
 class Unit(pygame.sprite.Sprite):
-    def __init__(self, ship, x, y, images, cat, consume, consume_cat):
+    def __init__(self, ship, x, y, images, cat, consume, consume_cat, building=False):
         pygame.sprite.Sprite.__init__(self)
         self.cat = cat
         self.consume = consume
@@ -24,9 +24,11 @@ class Unit(pygame.sprite.Sprite):
             self.image_working = self.images[0]
             self.image_not_working = images[-2]
             self.image_broken = images[-1]
-        self.rect = pygame.Rect(x * ship.cell_size - 1, y * ship.cell_size - 1, self.image.get_width() + 2, self.image.get_height() + 2)
-        self.ship.every_single_unit[self.cat].append(self)
-        self.ship.group.add(self)
+        self.rect = pygame.Rect(x * ship.cell_size - 1 + self.ship.x, y * ship.cell_size - 1 + self.ship.y,
+                                self.image.get_width() + 2, self.image.get_height() + 2)
+        if not building:
+            self.ship.every_single_unit[self.cat].append(self)
+            self.ship.group.add(self)
         self.health = 10
         self.max_health = 10
 
@@ -73,3 +75,13 @@ class Unit(pygame.sprite.Sprite):
             else:
                 self.ship.resourses[self.cat] += self.consume
         self.new_image()
+
+    def move(self, x, y):
+        self.rect.center = (x // self.ship.cell_size * self.ship.cell_size,
+                            y // self.ship.cell_size * self.ship.cell_size)
+
+    def build(self, x, y):
+        self.rect.topleft = (x // self.ship.cell_size * self.ship.cell_size - 1,
+                            y // self.ship.cell_size * self.ship.cell_size - 1)
+        self.ship.every_single_unit[self.cat].append(self)
+        self.ship.group.add(self)

@@ -11,6 +11,7 @@ class Button(pygame.sprite.Sprite):
         self.y = y
         self.image = image
         self.rect = image.get_rect()
+        self.rect.move_ip(x, y)
         self.status = False
 
 
