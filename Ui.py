@@ -44,7 +44,6 @@ class Building_window(pygame_gui.elements.UIPanel):
                          object_id=ObjectID(object_id='#building_window'), starting_layer_height=0, visible=0)
         self.container = self.get_container()
         self.visible = False
-        self.close_button = Close_Button(775, 0, self.container, manager, self)
         self.items = []
         self.manager = manager
         for i in zip([(60, 60), (50, 180), (50, 300), (180, 60), (180, 180), (180, 300), (300, 60), ],
