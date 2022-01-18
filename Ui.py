@@ -45,6 +45,7 @@ class Building_window(pygame_gui.elements.UIPanel):
         self.container = self.get_container()
         self.visible = False
         self.close_button = Close_Button(775, 0, self.container, manager, self)
+        self.delete_button = Delete_Button()
         self.items = []
         self.manager = manager
         for i in zip([(60, 60), (50, 180), (50, 300), (180, 60), (180, 180), (180, 300), (300, 60), ],
@@ -57,6 +58,10 @@ class Building_window(pygame_gui.elements.UIPanel):
 class Building_Button(pygame_gui.elements.UIButton):
     def __init__(self, x, y, container, manager, object_id):
         super().__init__(relative_rect=pygame.Rect(x, y, 70, 70), text='', container=container, manager=manager,
-                         object_id=ObjectID(object_id=object_id), tool_tip_text='tooltip')
-        '''tip = pygame_gui.elements.UITooltip(html_text='tooltip', hover_distance=(100, 100), manager=manager,
-                                            parent_element=self)'''
+                         object_id=ObjectID(object_id=object_id))
+
+
+class Delete_Button(pygame_gui.elements.UIButton):
+    def __init__(self, x, y, container, manager):
+        super().__init__(relative_rect=pygame.Rect(x, y, 30, 30), text='', container=container, manager=manager,
+                         object_id=ObjectID(object_id='delete_button'))

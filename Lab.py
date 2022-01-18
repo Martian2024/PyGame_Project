@@ -22,12 +22,8 @@ class Lab(Storage):
             self.working = False
             self.broken = True
         if self.working:
-            if self.ship.resourses['energy'] >= 3 and self.ship.humans // \
-                    len(list(filter(lambda x: x.working, self.ship.storages['science']))) >= self.min_workers:
-                self.ship.resourses['science'] += 3 * self.workers * self.ship.humans // \
-                                                  len(list(
-                                                      filter(lambda x: x.working, self.ship.storages['science']))) // \
-                                                  self.max_workers * self.max_workers * 0.01
+            if self.ship.resourses['energy'] >= 3 and self.ship.humans != 0:
+                self.ship.resourses['science'] += 3 * self.ship.humans // len(list(filter(lambda x: x.working, self.ship.storages['science']))) // self.max_workers * self.max_workers * 0.005
                 self.ship.resourses['energy'] -= 3 * self.workers * self.ship.humans // \
                                                   len(list(
                                                       filter(lambda x: x.working, self.ship.storages['science']))) // \

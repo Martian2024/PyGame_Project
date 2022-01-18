@@ -98,7 +98,7 @@ def asteroids():
                 i.kill()
 
 
-while ship.distance < ship.aim_distance and ship.under_control:
+while ship.distance < ship.aim_distance and ship.under_control and ship.humans != 0:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
@@ -287,7 +287,7 @@ while ship.distance < ship.aim_distance and ship.under_control:
     manager.draw_ui(screen)
     pygame.display.update()
     clock.tick(fps)
-if ship.under_control:
+if ship.under_control and ship.humans != 0:
     win()
 else:
     defeat()

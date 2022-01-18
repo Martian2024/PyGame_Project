@@ -48,8 +48,8 @@ class Ship():
         lab1 = Lab(self, 17, 6)
         farm = Farm(self, 24, 7)
         ware = Warehouse(self, 20, 6)
-        ware.charges = {'Fe': 10000, 'Cu': 10000, 'O2': 10000, 'CO2': 10000, 'Al': 10000, 'Si': 10000, 'U': 10000,
-                        'H2O': 10000, 'food': 10000}
+        ware.charges = {'Fe': 100, 'Cu': 100, 'O2': 100, 'CO2': 100, 'Al': 100, 'Si': 100, 'U': 100,
+                        'H2O': 100, 'food': 100}
         arm = Armor(self, 23, 6)
         arm = Armor(self, 23, 7)
         arm = Armor(self, 23, 8)
@@ -99,6 +99,9 @@ class Ship():
         self.new_group.add(self.comand_module)
         self.resourses = {'Fe': 0, 'Cu': 0, 'O2': 0, 'CO2': 0, 'Al': 0, 'Si': 0, 'U': 0, 'H2O': 0,
                           'food': 0, 'energy': 0, 'science': 0}
+        self.humans = 0
+        for i in self.every_single_unit['cabins']:
+            i.output()
         for i in self.storages.keys():
             for unit in self.storages[i]:
                 unit.output()
@@ -112,6 +115,8 @@ class Ship():
         for i in self.storages.keys():
             for unit in self.storages[i]:
                 unit.input()
+        for i in self.every_single_unit['cabins']:
+            i.input()
 
     def change(self, x, y):
         for unit in self.group.sprites():
