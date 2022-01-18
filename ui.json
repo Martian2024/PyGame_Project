@@ -9,9 +9,12 @@
       }
     }
   },
-  "#opening_window": {
-    "images": {
-      "background_image": {
+  "#opening_window":
+  {
+    "images":
+    {
+      "background_image":
+      {
         "path": "data\\resourses_menu.png"
       }
     }
@@ -195,6 +198,44 @@
       "selected_image":
       {
         "path": "data\\pause_button2.png"
+      }
+    }
+  },
+  "#not_exit_button":
+  {
+    "images":
+    {
+      "normal_image":
+      {
+        "path": "data\\not_exit_button1.png"
+      },
+      "selected_image":
+      {
+        "path": "data\\not_exit_button2.png"
+      }
+    }
+  },
+  "#not_exit_window":
+  {
+    "images":
+    {
+      "background_image":
+      {
+        "path": "data\\not_exit_menu.png"
+      }
+    }
+  },
+  "#exit_button":
+  {
+    "images":
+    {
+      "normal_image":
+      {
+        "path": "data\\exit_button1.png"
+      },
+      "selected_image":
+      {
+        "path": "data\\exit_button2.png"
       }
     }
   }

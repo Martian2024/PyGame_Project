@@ -51,6 +51,8 @@ build = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((30, 0), (30, 30)
                                      text='',
                                      manager=manager, object_id=ObjectID(object_id='#building_button'))
 pause_button = Pause_Button(1170, 0, manager)
+not_exit_button = Not_Exit_Button(1140, 0, manager)
+not_exit_window = Not_Exit_Window(500, 100, manager)
 building_module = None
 
 
@@ -242,11 +244,16 @@ while ship.distance < ship.aim_distance and ship.under_control and ship.humans !
                                                    mouse_pointer.y // ship.cell_size * ship.cell_size)
             elif type(event.ui_element) == Delete_Button:
                 deleting = True
+                building_wind.hide()
             elif type(event.ui_element) == Pause_Button:
                 if pause:
                     pause = False
                 else:
                     pause = True
+            elif type(event.ui_element) == Not_Exit_Button:
+                not_exit_window.show()
+            elif type(event.ui_element) == Exit_Button:
+                sys.exit()
         manager.process_events(event)
     manager.update(0)
     if ship.comand_module.rect.bottom > screen.get_height() and motion_y > 0:

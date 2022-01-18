@@ -70,3 +70,24 @@ class Pause_Button(pygame_gui.elements.UIButton):
     def __init__(self, x, y, manager):
         super().__init__(relative_rect=pygame.Rect(x, y, 30, 30), text='', manager=manager,
                          object_id=ObjectID(object_id='#pause_button'))
+
+class Not_Exit_Button(pygame_gui.elements.UIButton):
+    def __init__(self, x, y, manager):
+        super().__init__(relative_rect=pygame.Rect(x, y, 30, 30), text='', manager=manager,
+                         object_id=ObjectID(object_id='#not_exit_button'))
+
+class Not_Exit_Window(pygame_gui.elements.UIPanel):
+    def __init__(self, x, y, manager):
+        super().__init__(relative_rect=pygame.Rect(x, y, 200, 200), manager=manager,
+                         object_id=ObjectID(object_id='#not_exit_window'), starting_layer_height=0, visible=0)
+        self.container = self.get_container()
+        self.visible = False
+        self.items = []
+        self.manager = manager
+        self.close_button = Close_Button(175, 0, self.container, manager, self)
+        self.exit = Exit_Button(75, 75, self.container, manager)
+
+class Exit_Button(pygame_gui.elements.UIButton):
+    def __init__(self, x, y, container, manager):
+        super().__init__(relative_rect=pygame.Rect(x, y, 50, 30), text='', container=container, manager=manager,
+                             object_id=ObjectID(object_id='#exit_button'))
