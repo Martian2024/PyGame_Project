@@ -86,8 +86,14 @@ class Not_Exit_Window(pygame_gui.elements.UIPanel):
         self.manager = manager
         self.close_button = Close_Button(175, 0, self.container, manager, self)
         self.exit = Exit_Button(75, 75, self.container, manager)
+        self.restart = Restart_Button(50, 140, self.container, manager)
 
 class Exit_Button(pygame_gui.elements.UIButton):
     def __init__(self, x, y, container, manager):
         super().__init__(relative_rect=pygame.Rect(x, y, 50, 30), text='', container=container, manager=manager,
                              object_id=ObjectID(object_id='#exit_button'))
+
+class Restart_Button(pygame_gui.elements.UIButton):
+    def __init__(self, x, y, container, manager):
+        super().__init__(relative_rect=pygame.Rect(x, y, 100, 30), text='', container=container, manager=manager,
+                             object_id=ObjectID(object_id='#restart_button'))

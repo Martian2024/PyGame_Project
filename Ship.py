@@ -48,8 +48,8 @@ class Ship():
         lab1 = Lab(self, 17, 6)
         farm = Farm(self, 24, 7)
         ware = Warehouse(self, 20, 6)
-        ware.charges = {'Fe': 100, 'Cu': 100, 'O2': 100, 'CO2': 100, 'Al': 100, 'Si': 100, 'U': 100,
-                        'H2O': 100, 'food': 100}
+        ware.charges = {'Fe': 10000, 'Cu': 10000, 'O2': 10000, 'CO2': 10000, 'Al': 10000, 'Si': 10000, 'U': 10000,
+                        'H2O': 10000, 'food': 10000}
         arm = Armor(self, 23, 6)
         arm = Armor(self, 23, 7)
         arm = Armor(self, 23, 8)
