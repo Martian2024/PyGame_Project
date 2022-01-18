@@ -10,6 +10,7 @@ from Engine import Engine
 from Command_module import Comand_Module
 from Warehouse import Warehouse
 from Laser import Laser
+from Biome import Biome
 from Asteroid import Asteroid
 from Container import Container
 
@@ -40,12 +41,15 @@ class Ship():
         plant1 = PowerPlant(self, 18, 7)
         plant2 = PowerPlant(self, 18, 9)
         self.comand_module = Comand_Module(self, 16, 11)
-        bat1 = Battery(self, 8, 3)
-        bat2 = Battery(self, 8, 9)
+        bat1 = Battery(self, 20, 7)
+        bat2 = Battery(self, 20, 9)
+        biome1 = Biome(self, 22, 7)
+        biome2 = Biome(self, 22, 9)
         lab1 = Lab(self, 17, 6)
+        farm = Farm(self, 24, 7)
         ware = Warehouse(self, 20, 6)
-        ware.charges = {'Fe': 100, 'Cu': 100, 'O2': 100, 'CO2': 100, 'Al': 100, 'Si': 100, 'U': 100, 'H2O': 100,
-                          'food': 100}
+        ware.charges = {'Fe': 10000, 'Cu': 10000, 'O2': 10000, 'CO2': 10000, 'Al': 10000, 'Si': 10000, 'U': 10000,
+                        'H2O': 10000, 'food': 10000}
         arm = Armor(self, 23, 6)
         arm = Armor(self, 23, 7)
         arm = Armor(self, 23, 8)
@@ -54,6 +58,9 @@ class Ship():
         for i in self.every_single_unit.keys():
             for a in self.every_single_unit[i]:
                 self.group.add(a)
+        for i in self.storages.keys():
+            for unit in self.storages[i]:
+                unit.input()
         self.new_group = pygame.sprite.Group()
         self.new_group.add(self.comand_module)
         self.storages_types = [Battery, Lab]

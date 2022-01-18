@@ -118,16 +118,21 @@ while ship.distance < ship.aim_distance and ship.under_control:
                             if res[i] < building_module.build_cat[i]:
                                 can_build = False
                         if can_build:
-                            building_module.build(mouse_pointer.x,
-                                                    mouse_pointer.y)
+
                             for unit in ship.storages['storages']:
                                 for cat in building_module.build_cat.keys():
-                                    unit.charges[cat] -= \
-                                        building_module.build_cat[cat] // \
-                                        len(list(filter(lambda x: x.working, ship.storages['storages'])))
-                            building = False
-                            pause = False
-                            mouse_traking = False
+                                    try:
+                                        unit.charges[cat] -= \
+                                            building_module.build_cat[cat] // \
+                                            len(list(filter(lambda x: x.working, ship.storages['storages'])))
+                                        building_module.build(mouse_pointer.x,
+                                                              mouse_pointer.y)
+                                        building = False
+                                        pause = False
+                                        mouse_traking = False
+                                    except ZeroDivisionError:
+                                        pass
+
         elif event.type == pygame.MOUSEBUTTONUP:
             pass
         elif event.type == pygame.MOUSEMOTION:

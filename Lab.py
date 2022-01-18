@@ -1,5 +1,6 @@
-import  pygame
+import pygame
 from Storages import Storage
+
 
 class Lab(Storage):
     def __init__(self, ship, x, y, building=False):
@@ -9,6 +10,9 @@ class Lab(Storage):
                          'science', 3, ['energy'], building=building)
         self.health = 10
         self.max_health = 10
+        self.min_workers = 20
+        self.workers = 0
+        self.max_workers = 1000
         self.charges = {'science': 0}
         self.max_charges = {'science': 100}
         self.built_cat = {'Fe': 10, 'Cu': 20, 'Si': 10, 'Al': 5, 'U': 5}
@@ -18,9 +22,16 @@ class Lab(Storage):
             self.working = False
             self.broken = True
         if self.working:
-            if self.ship.resourses['energy'] >= 3:
-                self.ship.resourses['science'] += 3
-                self.ship.resourses['energy'] -= 3
+            if self.ship.resourses['energy'] >= 3 and self.ship.humans // \
+                    len(list(filter(lambda x: x.working, self.ship.storages['science']))) >= self.min_workers:
+                self.ship.resourses['science'] += 3 * self.workers * self.ship.humans // \
+                                                  len(list(
+                                                      filter(lambda x: x.working, self.ship.storages['science']))) // \
+                                                  self.max_workers * self.max_workers * 0.01
+                self.ship.resourses['energy'] -= 3 * self.workers * self.ship.humans // \
+                                                  len(list(
+                                                      filter(lambda x: x.working, self.ship.storages['science']))) // \
+                                                  self.max_workers * self.max_workers * 0.01
             else:
                 self.working = False
         self.new_image()

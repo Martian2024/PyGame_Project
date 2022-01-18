@@ -83,5 +83,6 @@ class Unit(pygame.sprite.Sprite):
     def build(self, x, y):
         self.rect.topleft = (x // self.ship.cell_size * self.ship.cell_size - 1,
                             y // self.ship.cell_size * self.ship.cell_size - 1)
-        self.ship.every_single_unit[self.cat].append(self)
-        self.ship.group.add(self)
+        if self not in self.ship.group.sprites():
+            self.ship.every_single_unit[self.cat].append(self)
+            self.ship.group.add(self)
