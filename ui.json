@@ -238,5 +238,19 @@
         "path": "data\\exit_button2.png"
       }
     }
+  },
+  "#restart_button":
+  {
+    "images":
+    {
+      "normal_image":
+      {
+        "path": "data\\restart_button1.png"
+      },
+      "selected_image":
+      {
+        "path": "data\\restart_button2.png"
+      }
+    }
   }
 }
