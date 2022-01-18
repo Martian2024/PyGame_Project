@@ -111,10 +111,9 @@ while ship.distance < ship.aim_distance and ship.under_control:
                     if can_build:
                         res = {'Fe': 0, 'Cu': 0, 'O2': 0, 'CO2': 0, 'Al': 0, 'Si': 0, 'U': 0, 'H2O': 0,
                           'food': 0, 'energy': 0, 'science': 0}
-                        for units in ship.storages.values():
-                            for i in units:
-                                for cat in i.charges.keys():
-                                    res[cat] += i.charges[cat]
+                        for unit in ship.storages['storages']:
+                            for i in unit.charges.keys():
+                                res[i] += unit.charges[i]
                         for i in building_module.build_cat.keys():
                             if res[i] < building_module.build_cat[i]:
                                 can_build = False
