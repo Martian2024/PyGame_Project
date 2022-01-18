@@ -170,20 +170,6 @@
       }
     }
     },
-  "#delete_button":
-  {
-    "images":
-    {
-      "normal_image":
-      {
-        "path": "data\\delete_button1.png"
-      },
-      "selected_image":
-      {
-        "path": "data\\delete_button2.png"
-      }
-    }
-  },
   "tooltip":
   {
     "misc":
