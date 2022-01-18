@@ -9,8 +9,8 @@ class Lab(Storage):
                          'science', 3, ['energy'], building=building)
         self.health = 10
         self.max_health = 10
-        self.charge = 10
-        self.max_charge = 1000
+        self.charges = {'science': 0}
+        self.max_charges = {'science': 100}
         self.built_cat = {'Fe': 10, 'Cu': 20, 'Si': 10, 'Al': 5, 'U': 5}
 
     def do(self):

@@ -109,12 +109,23 @@ while ship.distance < ship.aim_distance and ship.under_control:
                 mouse_pointer.move(*event.pos)
                 if building:
                     if can_build:
+                        res = {'Fe': 0, 'Cu': 0, 'O2': 0, 'CO2': 0, 'Al': 0, 'Si': 0, 'U': 0, 'H2O': 0,
+                          'food': 0, 'energy': 0, 'science': 0}
+                        for units in ship.storages.values():
+                            for i in units:
+                                for cat in i.charges.keys():
+                                    res[cat] += i.charges[cat]
                         for i in building_module.build_cat.keys():
-                            if ship.resourses[i] < building_module.build_cat[i]:
+                            if res[i] < building_module.build_cat[i]:
                                 can_build = False
                         if can_build:
                             building_module.build(mouse_pointer.x,
                                                     mouse_pointer.y)
+                            for unit in ship.storages['storages']:
+                                for cat in building_module.build_cat.keys():
+                                    unit.charges[cat] -= \
+                                        building_module.build_cat[cat] // \
+                                        len(list(filter(lambda x: x.working, ship.storages['storages'])))
                             building = False
                             pause = False
                             mouse_traking = False

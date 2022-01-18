@@ -8,7 +8,8 @@ class Battery(Storage):
                                       pygame.image.load('data\\battery_not_working.png'),
                                       pygame.image.load('data\\battery_broken.png')],
                          'energy', 0, None, building=building)
-        self.max_charge = 10000
+        self.charges = {'energy': 0}
+        self.max_charges = {'science': 1000}
         self.build_cat = {'Fe': 10, 'Cu': 10}
 
     def do(self):

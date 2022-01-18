@@ -43,3 +43,8 @@ class Laser(Unit):
                 self.cooldown += 1
             else:
                 self.cooldown = 0
+
+    def build(self, x, y):
+        super().build(x, y)
+        for i in self.build_cat.keys():
+            self.ship.resourses[i] -= self.build_cat[i]

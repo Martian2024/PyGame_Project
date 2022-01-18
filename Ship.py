@@ -23,8 +23,8 @@ class Ship():
         self.velocity = 10
         self.under_control = True
         self.map = [['n' for _ in range(30)] for _ in range(14)]
-        self.resourses = {'Fe': 0, 'Cu': 0, 'O2': 0, 'CO2': 0, 'Al': 0, 'Si': 0, 'U': 0, 'H2O': 0, 'food': 0,
-                          'energy': 100, 'science': 0}
+        self.resourses = {'Fe': 100, 'Cu': 50, 'O2': 50, 'CO2': 50, 'Al': 50, 'Si': 50, 'U': 50, 'H2O': 50,
+                          'food': 50, 'energy': 0, 'science': 0}
         self.every_single_unit = {'energy': [], 'commands': [], 'food': [], 'storages': [], 'engines': [],
                                   'science': [], 'defense': [], 'cabins': [],
                                   'armor': []}
@@ -44,6 +44,8 @@ class Ship():
         bat2 = Battery(self, 8, 9)
         lab1 = Lab(self, 17, 6)
         ware = Warehouse(self, 20, 6)
+        ware.charges = {'Fe': 100, 'Cu': 100, 'O2': 100, 'CO2': 100, 'Al': 100, 'Si': 100, 'U': 100, 'H2O': 100,
+                          'food': 100}
         arm = Armor(self, 23, 6)
         arm = Armor(self, 23, 7)
         arm = Armor(self, 23, 8)
