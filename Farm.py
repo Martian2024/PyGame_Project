@@ -9,6 +9,7 @@ class Farm(Unit):
         self.health = 10
         self.max_health = 10
         self.build_cat = {'Fe': 10, 'Cu': 5, 'Si': 7}
+        self.producing_cat = {'food': 5, 'O2': 5}
 
 
     def new_image(self):
@@ -18,3 +19,18 @@ class Farm(Unit):
             self.image = self.image_not_working
         else:
             self.image = self.image_working
+
+    def do(self):
+        if self.health < self.max_health // 2:
+            self.working = False
+            self.broken = True
+        if self.working:
+            for cat in self.consume_cat:
+                if self.ship.resourses[cat] < self.consume:
+                    self.working = False
+                else:
+                    self.ship.resourses[cat] -= self.consume
+            if self.working:
+                for cat in self.producing_cat.keys():
+                    self.ship.resourses[cat] += self.producing_cat[cat]
+        self.new_image()
