@@ -29,7 +29,7 @@ ship = Ship(screen)
 fon = pygame.image.load('data\\fon.jpg')
 wn = pygame.font.Font(None, 50)
 progrs = pygame.font.Font(None, 25)
-pause = False
+pause = True
 mouse_pointer = MousePointer(0, 0)
 mouse_traking = False
 evnt = None
@@ -40,6 +40,7 @@ motion_x = 0
 motion_y = 0
 manager = pygame_gui.UIManager((1200, 600), 'ui.json')
 building = False
+deleting = False
 can_build = True
 resourses_wind = Resourses_window(200, 100, manager)
 building_wind = Building_window(200, 100, manager)
@@ -49,8 +50,9 @@ tel = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((0, 0), (30, 30)),
 build = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((30, 0), (30, 30)),
                                      text='',
                                      manager=manager, object_id=ObjectID(object_id='#building_button'))
-'''tip = pygame_gui.elements.UITooltip(html_text='tooltip', hover_distance=0, manager=manager,
-                                                     parent_element=build)'''
+pause_button = Pause_Button(1170, 0, manager)
+not_exit_button = Not_Exit_Button(1140, 0, manager)
+not_exit_window = Not_Exit_Window(500, 100, manager)
 building_module = None
 
 
@@ -132,7 +134,11 @@ while ship.distance < ship.aim_distance and ship.under_control and ship.humans !
                                         mouse_traking = False
                                     except ZeroDivisionError:
                                         pass
-
+                elif deleting:
+                    for i in range(len(ship.group.sprites()) - 1, 0, -1):
+                        if mouse_pointer.rect.colliderect(ship.group.sprites()[i]):
+                            ship.destroy(ship.group.sprites()[i])
+                            deleting = False
         elif event.type == pygame.MOUSEBUTTONUP:
             pass
         elif event.type == pygame.MOUSEMOTION:
@@ -195,6 +201,7 @@ while ship.distance < ship.aim_distance and ship.under_control and ship.humans !
                 building = False
                 pause = False
                 mouse_traking = False
+                deleting = False
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_w:
                 motion_y = 0
@@ -235,6 +242,18 @@ while ship.distance < ship.aim_distance and ship.under_control and ship.humans !
                     building_module = Armor(ship, 0, 0, building=True)
                 building_module.rect.topleft = (mouse_pointer.x // ship.cell_size * ship.cell_size,
                                                    mouse_pointer.y // ship.cell_size * ship.cell_size)
+            elif type(event.ui_element) == Delete_Button:
+                deleting = True
+                building_wind.hide()
+            elif type(event.ui_element) == Pause_Button:
+                if pause:
+                    pause = False
+                else:
+                    pause = True
+            elif type(event.ui_element) == Not_Exit_Button:
+                not_exit_window.show()
+            elif type(event.ui_element) == Exit_Button:
+                sys.exit()
         manager.process_events(event)
     manager.update(0)
     if ship.comand_module.rect.bottom > screen.get_height() and motion_y > 0:

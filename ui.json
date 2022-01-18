@@ -9,9 +9,12 @@
       }
     }
   },
-  "#opening_window": {
-    "images": {
-      "background_image": {
+  "#opening_window":
+  {
+    "images":
+    {
+      "background_image":
+      {
         "path": "data\\resourses_menu.png"
       }
     }
@@ -170,25 +173,70 @@
       }
     }
     },
-  "tooltip":
+  "#delete_button":
   {
-    "misc":
+    "images":
     {
-      "rect_width": "100"
-    },
-     "tool_tip.text_box":
-     {
-         "colours":
-         {
-             "dark_bg":"#505050",
-             "normal_border": "#FFFFFF"
-         },
-
-         "misc":
-         {
-             "border_width": "2",
-             "padding": "5,5"
-         }
-     }
+      "normal_image":
+      {
+        "path": "data\\delete_button1.png"
+      },
+      "selected_image":
+      {
+        "path": "data\\delete_button2.png"
+      }
+    }
+  },
+  "#pause_button":
+  {
+    "images":
+    {
+      "normal_image":
+      {
+        "path": "data\\pause_button1.png"
+      },
+      "selected_image":
+      {
+        "path": "data\\pause_button2.png"
+      }
+    }
+  },
+  "#not_exit_button":
+  {
+    "images":
+    {
+      "normal_image":
+      {
+        "path": "data\\not_exit_button1.png"
+      },
+      "selected_image":
+      {
+        "path": "data\\not_exit_button2.png"
+      }
+    }
+  },
+  "#not_exit_window":
+  {
+    "images":
+    {
+      "background_image":
+      {
+        "path": "data\\not_exit_menu.png"
+      }
+    }
+  },
+  "#exit_button":
+  {
+    "images":
+    {
+      "normal_image":
+      {
+        "path": "data\\exit_button1.png"
+      },
+      "selected_image":
+      {
+        "path": "data\\exit_button2.png"
+      }
+    }
   }
-  }
+}
